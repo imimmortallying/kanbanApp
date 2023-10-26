@@ -1,0 +1,54 @@
+.TodoPage{
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    
+    // height: 100%;
+    gap: 20px;
+    
+    width: 800px;
+    
+    margin: 0 auto;
+    margin-top: 50px;
+
+    border: 1px black solid;
+
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.Header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+}
+
+.body{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.acomplish_block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.importance_block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}

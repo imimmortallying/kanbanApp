@@ -1,0 +1,34 @@
+
+.AddTodo{
+    width: 100%;
+    // background-color: #fff;
+    height: 100%;
+    // background-color: red;
+    background-color: var(--secondary-color);
+    // outline: none;
+    border: none;
+
+    display: flex;
+    justify-content: start;
+    padding-left: 15px;
+    gap: 15px;
+    align-items: center;
+    color: var(--inverted-bg-color);
+    // отвалился колор, пришлось пихать сверху
+}
+
+.AddTodo:hover{
+    background-color: var(--primary-color);
+    color: var(--third-color);
+    cursor: pointer;
+}
+
+.AddTodo:active{
+    background-color: var(--bg-color);
+}
+
+
+.AddIcon{
+    fill: var(--inverted-bg-color);;
+}
+

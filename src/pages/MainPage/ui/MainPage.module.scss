@@ -1,0 +1,33 @@
+.MainPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; //
+    margin: auto; //
+    // width: 100%; // если вернуть, то горизонтальный скролл не вместит всё содержимое страницы при добавлении новых групп
+    align-items: center; //
+    // overflow-x: scroll; //
+    overflow-y: hidden; //
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.content_container {
+    // display: flex;
+    // flex-direction: row;
+    // margin: auto;
+    // gap: 4px;
+}
+
+.Header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 20px;
+    // align-items: end;
+}
+
+.contextButtons{
+
+}
