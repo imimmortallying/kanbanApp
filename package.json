@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://imimmortallying.github.io/kanbanApp",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
