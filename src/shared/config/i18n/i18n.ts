@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
 
-  .use(Backend) // вообще, задают переводы в этом файле. У меня их тут нет, потому что они подтягиваются из public/locales, 
+  // .use(Backend) // вообще, задают переводы в этом файле. У меня их тут нет, потому что они подтягиваются из public/locales, 
   // это позволит потом добавить асинхронную подрузку переводов, когда будет несколько страниц
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -15,6 +15,22 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
+    resources: {
+      en: {
+        translation: {
+          description: {
+            newGroup: "New group",
+          }
+        }
+      },
+      ru: {
+        translation: {
+          description: {
+            newGroup: "Новая группа",
+          }
+        }
+      }
+    }
 
   });
 
