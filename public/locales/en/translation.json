@@ -1,0 +1,17 @@
+{
+    "Новая группа": "Add group",
+    "Перевести": "Translate",
+    "Добавить задачу": "Add task",
+    "Поиск": "Find a task",
+    "Все":"All",
+    "Текущие":"Current",
+    "Выполненные":"Done",
+    "Фильтрация задач по выполнению": "Filtering tasks by completion",
+    "Фильтрация задач по важности": "Filtering tasks by importance",
+    "Важно и срочно": "important and urgent",
+    "Важно и не срочно": "important and not urgent",
+    "Срочно и не важно": "urgent and not important",
+    "Не срочно и не важно": "not urgent and not important",
+    "Не выбран": "not selected",
+    "Выбери статус": "select status"
+}

@@ -4,7 +4,7 @@ import cls from "./NewTodo.module.scss"
 import { useDispatch, useSelector } from "react-redux";
 import { changeImportance, changeTodoText, remove, selectTodoById, toggle, swapTodos } from "features/todosReducer/todosSlice";
 import { Button, Checkbox, Select, Input, ConfigProvider } from "antd";
-import { importanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
+import { ImportanceFilterInitial, importanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 
@@ -14,6 +14,7 @@ import CrossIcon from "shared/assets/icons/cross.svg";
 
 
 import { CSS } from "@dnd-kit/utilities"
+import { useTranslation } from "react-i18next";
 
 interface NewTodoProps {
     className?: string;
@@ -24,7 +25,7 @@ interface NewTodoProps {
 
 export const NewTodo = ({ className, id }: NewTodoProps) => {
 
-
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
     const todo = useSelector(state => selectTodoById(state, id))
@@ -74,19 +75,19 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
 
                 <div
                     //dnd todo
-                    ref={setNodeRef}
-                    style={style}
-                    {...attributes}
-                    {...listeners}
-                    id={id}
+                    // ref={setNodeRef}
+                    // style={style}
+                    // {...attributes}
+                    // {...listeners}
+                    // id={id}
                     className={classNames(cls.NewTodo_active, {}, [className])}
                     onClick={() => setInputEditMode(true)}
-                    onMouseEnter={() => {
-                        setMouseIsOver(true);
-                    }}
-                    onMouseLeave={() => {
-                        setMouseIsOver(false);
-                    }}
+                    // onMouseEnter={() => {
+                    //     setMouseIsOver(true);
+                    // }}
+                    // onMouseLeave={() => {
+                    //     setMouseIsOver(false);
+                    // }}
                 >
 
                     <textarea
@@ -117,7 +118,7 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
         )
     }
 
-    if (!inputEditMode && mouseIsOver) {
+    if (!inputEditMode) {
         return (
 
                 <div
@@ -130,12 +131,12 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
                     id={id}
                     className={classNames(cls.NewTodo, {}, [className])}
 
-                    onMouseEnter={() => {
-                        setMouseIsOver(true);
-                    }}
-                    onMouseLeave={() => {
-                        setMouseIsOver(false);
-                    }}
+                    // onMouseEnter={() => {
+                    //     setMouseIsOver(true);
+                    // }}
+                    // onMouseLeave={() => {
+                    //     setMouseIsOver(false);
+                    // }}
                 >
                     <div className={classNames(cls.todo_options, {}, [])}>
                         <Checkbox
@@ -146,11 +147,11 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
                         <Select
                             className={classNames(cls.select, {}, [])}
                             size="small"
-                            options={[...importanceInitial, { value: 'not chosen', label: 'Не выбран' }]}
+                            options={[...ImportanceFilterInitial(), { value: 'not chosen', label: t('Не выбран') }]}
                             style={{ width: 180 }}
                             // placeholder="Выбери статус" // его не видно, приходится добавлять его как value, а это не серый, а черный цвет текста
                             onChange={(value) => dispatch(changeImportance({ id, value }))}
-                            value={importance === 'not chosen' ? 'Выбери статус' : importance}
+                            value={importance === 'not chosen' ? t('Выбери статус') : importance}
                         />
                         <Button
                             onClick={() => dispatch(remove(id))}
@@ -176,61 +177,5 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
         );
     }
 
-    if (!inputEditMode && !mouseIsOver) {
-        return (
-
-
-                <div
-                    //dnd todo
-                    ref={setNodeRef}
-                    style={style}
-                    {...attributes}
-                    {...listeners}
-
-                    id={id}
-                    className={classNames(cls.NewTodo, {}, [className])}
-                    onClick={() => setInputEditMode(true)}
-                    onMouseEnter={() => {
-                        setMouseIsOver(true);
-                    }}
-                    onMouseLeave={() => {
-                        setMouseIsOver(false);
-                    }}
-                >
-                    <p className={classNames(cls.todo_text, {}, [])}>
-                        {text}
-                    </p>
-
-                    <div className={classNames(cls.todo_options, {}, [])}>
-                        <Checkbox
-                            onChange={() => dispatch(toggle(id))}
-                            checked={completed}
-                            className={classNames(cls.checkbox, {}, [])}
-                        />
-                        <Select
-                            className={classNames(cls.select, {}, [])}
-                            size="small"
-                            options={[...importanceInitial, { value: 'not chosen', label: 'Не выбран' }]}
-                            style={{ width: 180 }}
-                            // placeholder="Выбери статус" // его не видно, приходится добавлять его как value, а это не серый, а черный цвет текста
-                            onChange={(value) => dispatch(changeImportance({ id, value }))}
-                            value={importance === 'not chosen' ? 'Выбери статус' : importance}
-                        />
-                        <Button
-                            onClick={() => dispatch(remove(id))}
-                            className={classNames(cls.Button_remove_task, {}, [])}
-                            type="link"
-                            danger
-                            size='small'
-                        >
-                            {<CrossIcon className={classNames(cls.cross, {}, [])} />}
-                        </Button>
-                    </div>
-
-                </div>
-
-
-        );
-    }
 
 };

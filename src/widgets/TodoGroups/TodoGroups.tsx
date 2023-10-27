@@ -12,6 +12,7 @@ import { createPortal } from "react-dom";
 import { NewTodo } from "features/NewTodo/NewTodo";
 import { changeDraggingTodoGroup, swapTodos } from "features/todosReducer/todosSlice";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
+import { useTranslation } from "react-i18next";
 
 
 interface TodoGroupsProps {
@@ -19,6 +20,9 @@ interface TodoGroupsProps {
 }
 
 export const TodoGroups = ({ className }: TodoGroupsProps) => {
+
+    // i18n
+    const { t } = useTranslation();
 
     const {theme} = useTheme();
 
@@ -129,7 +133,10 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                         // для dnd добавил group={group}
                         return <TodoGroup groupId={group.id} key={crypto.randomUUID()} groupName={group.name} group={group}></TodoGroup>
                     })}
-                    <Button className={classNames(cls.newGroup_btn, {}, [className])} onClick={() => { dispatch(addGroup(crypto.randomUUID())) }}>Новая группа</Button>
+                    <Button className={classNames(cls.newGroup_btn, {}, [className])} 
+                        onClick={() => { dispatch(addGroup(crypto.randomUUID())) }}>
+                            {t('Новая группа')}
+                    </Button>
                 </SortableContext>
             </div>
 

@@ -13,6 +13,7 @@ import { FindTodo } from "features/FindTodo";
 import { TodoGroups } from "widgets/TodoGroups/TodoGroups";
 import { ThemeSwitcher } from "widgets/ThemeSwitcher";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
+import { LangSwitcher } from "widgets/LangSwitcher/LangSwitcher";
 
 
 //
@@ -26,7 +27,7 @@ export const MainPage: FC<MainPageProps> = (props) => {
     const { className, children } = props
     const {theme} = useTheme();
     console.log(getComputedStyle(document.documentElement).getPropertyValue('--third-color'))
-
+    console.log(theme)
     return (
         <ConfigProvider
         theme={{
@@ -38,9 +39,9 @@ export const MainPage: FC<MainPageProps> = (props) => {
                 // colorPrimary: getComputedStyle(document.documentElement).getPropertyValue('--third-color'),
                 //! достать переменную темы не получается. Можно задать ее дополнительно в global.scss, тогда увиже ее выше. Но она будет статичная
                 //! как правильно задать в этом случае темы, не переписывая структуру темы вручную?
+                //? один из вариантов смотри в index.scss
                 fontFamily: 'Consolas, "Times New Roman", Serif',
                 fontSize: 16,
-
             },
         }}
     >
@@ -53,7 +54,7 @@ export const MainPage: FC<MainPageProps> = (props) => {
                 <FilterImportance></FilterImportance>
                 <div className={classNames(cls.contextButtons, {}, [className])}>
                     <ThemeSwitcher></ThemeSwitcher>
-                    <Button>Перевести</Button>
+                    <LangSwitcher></LangSwitcher>
                 </div>
 
             </div>

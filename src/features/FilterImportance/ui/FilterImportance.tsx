@@ -4,16 +4,21 @@ import cls from "./FilterImportance.module.scss"
 import { useDispatch } from "react-redux";
 import { Checkbox } from "antd";
 import { toggleFilter } from "features/filterReducer/visibilityFilterSlice";
-import { importanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
+import { ImportanceFilterInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
+import { useTranslation } from "react-i18next";
 
 interface FilterImportanceProps {
     className?: string;
 }
 export const FilterImportance = ({className}:FilterImportanceProps) => {
 
+    const { t } = useTranslation();
+
     const dispatch = useDispatch();
 
-    const renderedCheckboxes = importanceInitial.map(el => {
+    console.log(ImportanceFilterInitial())
+
+    const renderedCheckboxes = ImportanceFilterInitial().map(el => {
         return  <div className={cls.importance__elem} key={el.value}>
                     <Checkbox onChange={()=>( dispatch(toggleFilter(el.value)) )}/>
                     <div>{el.label}</div>
@@ -22,7 +27,7 @@ export const FilterImportance = ({className}:FilterImportanceProps) => {
 
     return (
         <div className={classNames(cls.FilterImportance, {}, [className])}>
-                                <span>Фильтрация по важности</span>
+                                <span>{t('Фильтрация задач по важности')}</span>
                                 {renderedCheckboxes}                     
         </div>
     );

@@ -5,6 +5,7 @@ import { Input } from "antd";
 import { useState } from "react";
 import { updateFindingString } from "features/findReducer/findSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 //! почему компонент находится внутри todosReducer???
 
@@ -12,25 +13,12 @@ interface FindTodoProps {
     className?: string;
 }
 
-const exmpData = [
-    {text: 'str', id: 1},
-    {text: 'strdsfsdf dfsd dfs', id: 2},
-    {text: 'hello hi how are yous', id: 3},
-    {text: 'hello hi how are you', id: 4},
-]
-
-
-let findObj = (array: any, string:string) => {
-    return array.filter((item:any) => {
-        return item.text.split(' ').find((str:any)=>str.includes(string))
-
-    })
-}
-console.log(findObj(exmpData, 'yous'))
 
 export const FindTodo = ({className}:FindTodoProps) => {
 
     const dispatch = useDispatch();
+
+    const { t } = useTranslation();
 
     const [findingStr, setFindingStr] = useState('')
 
@@ -43,7 +31,7 @@ export const FindTodo = ({className}:FindTodoProps) => {
 
     return (
         <div className={classNames(cls.FindTodo, {}, [className])}>
-            Поиск
+            {t('Поиск')}
             <Input 
             onChange={handleInputChange}
             value={findingStr} 

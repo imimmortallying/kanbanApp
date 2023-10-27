@@ -61,7 +61,6 @@ opacity: 70%;
     left: 0;
     bottom: 7px;
     // align-self: flex-start;
-    // background-color: #fff;
 }
 
 .Button_remove_task{
@@ -75,6 +74,11 @@ opacity: 70%;
     bottom: 5px;
     left: 80px;
 }
+
+.select:focus{
+    border: red;
+}
+
 
 .placeholder {
     box-sizing: border-box;

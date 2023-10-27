@@ -7,9 +7,9 @@ import App from "app/App";
 import store from './app/ReduxStore/store';
 import { HashRouter } from "react-router-dom";
 import ThemeProvider from "app/providers/ThemeProvider/ThemeProvider";
+import "./shared/config/i18n/i18n";
 
 // ulbi оборачивате BrowserRoute'м  корневой index.tsx. Хекслет - app.js
-
 // Хекслет затем тут же передает внутрь routes импортированые страницы,
 // улби делает это уже в апп, а не в index.tsx, при этом передает 1 компонентом AppRouter
 

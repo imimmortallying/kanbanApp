@@ -12,6 +12,11 @@ body,
     width: 100%;
 }
 
+// тут можно применить темы для компонентов ANTD
+// .ant-checkbox-inner{
+//   background: #0ab02e !important;
+// }
+
 .app{
   font: var(--font-m);
   background: var(--bg-color);
