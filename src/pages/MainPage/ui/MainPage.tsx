@@ -54,7 +54,6 @@ export const MainPage: FC<MainPageProps> = (props) => {
                 <FilterImportance></FilterImportance>
                 <div className={classNames(cls.contextButtons, {}, [className])}>
                     <ThemeSwitcher></ThemeSwitcher>
-                    deploy
                     <LangSwitcher></LangSwitcher>
                 </div>
 
