@@ -46,27 +46,36 @@
     border:var(--third-color) 3px solid;
 }
 
-.todo_options_hover{
-opacity: 100%;
 
-}
-
-.todo_options{
-opacity: 70%;
-
-}
 
 .checkbox{
     position: absolute;
-    left: 0;
-    bottom: 7px;
+    left: 10px;
+    bottom: 5px;
     // align-self: flex-start;
 }
 
+
 .Button_remove_task{
     position: absolute;
-    bottom: 10px;
+    bottom: 6px;
     right: 0;
+
+    background-color: var(--primary-color);
+    // background-color: green;
+    border:none;
+}
+
+.remove_icon{
+    height: 20px;
+    fill: red;
+    opacity: 50%;
+    vertical-align: bottom;
+    
+}
+
+.remove_icon:hover{
+    opacity: 100%;
 }
 
 .select{

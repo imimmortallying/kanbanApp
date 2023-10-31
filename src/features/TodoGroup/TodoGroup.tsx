@@ -13,7 +13,8 @@ import { createSelector } from "reselect";
 
 import { CSS } from "@dnd-kit/utilities"
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
-import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { createPortal } from "react-dom";
 
 
 //icons 

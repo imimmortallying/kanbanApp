@@ -19,15 +19,26 @@
 }
 
 .Header {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 0.5fr 0.8fr 0.8fr 0.5fr;
+    // flex-direction: row;
     width: 100%;
-    justify-content: space-evenly;
+    justify-items: center;
     position: absolute;
     top: 20px;
     // align-items: end;
 }
 
-.contextButtons{
+.FindTodo{
+    // width: 15%;
+}
 
+.FilterAccomplishmentBtns{
+    width: 50%;
+}
+
+.contextButtons{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }

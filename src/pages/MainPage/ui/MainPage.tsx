@@ -5,7 +5,6 @@ import { Button, Checkbox, ConfigProvider } from 'antd';
 
 
 //redux toolkit
-import { TodoList } from "widgets/TodoList";
 import { FilterAccomplishmentBtns } from "features/FilterAcomplishmentBtns";
 import { FilterImportance } from "features/FilterImportance";
 import { AddTodo } from "features/AddTodo";
@@ -14,6 +13,7 @@ import { TodoGroups } from "widgets/TodoGroups/TodoGroups";
 import { ThemeSwitcher } from "widgets/ThemeSwitcher";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
 import { LangSwitcher } from "widgets/LangSwitcher/LangSwitcher";
+import { LangSwitcher2 } from "widgets/LangSwitcher/LangSwitcher2";
 
 
 //
@@ -46,15 +46,15 @@ export const MainPage: FC<MainPageProps> = (props) => {
         }}
     >
 
-        <div className={classNames(cls.MainPage, {}, [className])}>
+        <div className={classNames(cls.MainPage, {}, [])}>
 
-            <div className={classNames(cls.Header, {}, [className])}>
-                <FindTodo></FindTodo>
-                <FilterAccomplishmentBtns></FilterAccomplishmentBtns>
-                <FilterImportance></FilterImportance>
-                <div className={classNames(cls.contextButtons, {}, [className])}>
+            <div className={classNames(cls.Header, {}, [])}>
+                <FindTodo className={classNames(cls.FindTodo, {}, [])}></FindTodo>
+                <FilterAccomplishmentBtns className={classNames(cls.FilterAccomplishmentBtns, {}, [])}></FilterAccomplishmentBtns>
+                <FilterImportance className={classNames(cls.FilterImportance, {}, [])}></FilterImportance>
+                <div className={classNames(cls.contextButtons, {}, [])}>
                     <ThemeSwitcher></ThemeSwitcher>
-                    <LangSwitcher></LangSwitcher>
+                    <LangSwitcher2></LangSwitcher2>
                 </div>
 
             </div>

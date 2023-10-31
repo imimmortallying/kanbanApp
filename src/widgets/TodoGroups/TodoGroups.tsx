@@ -135,7 +135,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                     })}
                     <Button className={classNames(cls.newGroup_btn, {}, [className])} 
                         onClick={() => { dispatch(addGroup(crypto.randomUUID())) }}>
-                            {t('description.newGroup')}
+                            {t("Новая группа")}
                     </Button>
                 </SortableContext>
             </div>

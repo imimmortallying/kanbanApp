@@ -4,9 +4,11 @@ import cls from "./NewTodo.module.scss"
 import { useDispatch, useSelector } from "react-redux";
 import { changeImportance, changeTodoText, remove, selectTodoById, toggle, swapTodos } from "features/todosReducer/todosSlice";
 import { Button, Checkbox, Select, Input, ConfigProvider } from "antd";
-import { ImportanceFilterInitial, importanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
+// import { ImportanceFilterInitial, importanceInitial, getImportanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
+import { getImportanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
+import TrashIcon from "shared/assets/icons/TrashIcon.svg";
 
 import CrossIcon from "shared/assets/icons/cross.svg";
 
@@ -27,15 +29,15 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
 
     const { t } = useTranslation();
 
+
     const dispatch = useDispatch();
     const todo = useSelector(state => selectTodoById(state, id))
     const { text, completed, importance, description, group } = todo;
 
     // show options on textfield hover
-    const [mouseIsOver, setMouseIsOver] = useState(false);
+    // const [mouseIsOver, setMouseIsOver] = useState(false);
 
     // textfield
-    const { TextArea } = Input;
     const [textareaValue, setTextareaValue] = useState(text);
     const handleInputChange = (e: any) => {
         setTextareaValue(e.target.value)
@@ -81,7 +83,7 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
                     // {...listeners}
                     // id={id}
                     className={classNames(cls.NewTodo_active, {}, [className])}
-                    onClick={() => setInputEditMode(true)}
+                    // onClick={() => setInputEditMode(true)}
                     // onMouseEnter={() => {
                     //     setMouseIsOver(true);
                     // }}
@@ -104,7 +106,7 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
                             if (e.key === "Enter" && e.shiftKey) {
                                 setInputEditMode(false)
                                 dispatch(changeTodoText({ id, textareaValue }))
-                                setMouseIsOver(false)
+                                // setMouseIsOver(false)
                             }
                         }}
                         placeholder="Что нужно сделать?"
@@ -147,21 +149,22 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
                         <Select
                             className={classNames(cls.select, {}, [])}
                             size="small"
-                            options={[...ImportanceFilterInitial(), { value: 'not chosen', label: t('Не выбран') }]}
+                            options={[...getImportanceInitial(t), { value: 'not chosen', label: t('Не выбран') }]}
                             style={{ width: 180 }}
                             // placeholder="Выбери статус" // его не видно, приходится добавлять его как value, а это не серый, а черный цвет текста
                             onChange={(value) => dispatch(changeImportance({ id, value }))}
                             value={importance === 'not chosen' ? t('Выбери статус') : importance}
                         />
-                        <Button
+                        <button
                             onClick={() => dispatch(remove(id))}
                             className={classNames(cls.Button_remove_task, {}, [])}
-                            type="link"
-                            danger
-                            size='small'
+                            // type="link"
+                            // danger
+                            // size='small'
                         >
-                            {<CrossIcon className={classNames(cls.cross, {}, [])} />}
-                        </Button>
+                             {<TrashIcon className={classNames(cls.remove_icon, {}, [])}/>}
+                        </button>
+
                     </div>
 
                     {/* разница в абзаце, вместо инпута, когда неактивный режим */}
