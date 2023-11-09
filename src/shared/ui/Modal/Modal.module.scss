@@ -1,0 +1,62 @@
+// свойства, которые заданы ч/з переменные var() в портале не применяются, куда бы я их не применил: #root, body, app
+
+.Modal{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 10;
+
+    pointer-events: none;
+    opacity: 0;
+
+    font: var(--font-m);
+    color: var(--font-color);
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    background: rgba(0 0 0/ 60%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    padding: 20px;
+    border-radius: 12px;
+    background-color: var(--bg-color);
+
+    transition: 0.2s transform;
+    transform: scale(0.5);
+    max-width: 60%;
+
+}
+
+.opened {
+    pointer-events: auto;
+    opacity: 1;
+
+    z-index: 10; 
+
+    // т.е, если на родительский элемент навешался .opened, то при этом изменится и дочерний элемент с классом .content?
+    .content{
+        transform: scale(1);
+    }
+}
+
+.isClosing{
+
+    .content{
+        transition: 0.2s transform;
+        transform: scale(0.01);
+    }
+}
+
+.portal{
+    font: var(--font-m);
+    color: var(--font-color);
+}

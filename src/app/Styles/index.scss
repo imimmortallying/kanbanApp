@@ -4,24 +4,29 @@
 @import "./themes/light.scss";
 
 
+// как вариант, чтобы избавиться от работы по навешиванию тем и вызове хука useTheme, в ThemeProvider можно взять и на body навешать тему
+
 html,
 body,
 #root {
-//   @apply bg-black text-white box-border;
-    overflow-x: hidden; //
-    width: 100%;
+  //   @apply bg-black text-white box-border;
+  overflow-x: hidden; //
+  width: 100%;
+
 }
+
 
 // тут можно применить темы для компонентов ANTD
 // .ant-checkbox-inner{
 //   background: #0ab02e !important;
 // }
 
-.app{
+.app {
+
   font: var(--font-m);
-  background: var(--bg-color);
-  // color: var(--font-color);
   color: var(--font-color);
+  background: var(--bg-color);
+
 }
 
 ::-webkit-scrollbar {
@@ -36,8 +41,8 @@ body,
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--third-color);
-    border-radius: 20px;
+  background-color: var(--third-color);
+  border-radius: 20px;
 }
 
 // .task > ::-webkit-scrollbar-thumb {

@@ -1,5 +1,5 @@
 import { classNames } from "shared/lib/classNames/classNames";
-import { FC, ReactNode, useState, useRef, useEffect, useId } from 'react';
+import { FC, ReactNode, useState, useRef, useEffect, useId, useCallback } from 'react';
 import cls from "./MainPage.module.scss"
 import { Button, Checkbox, ConfigProvider } from 'antd';
 
@@ -14,6 +14,11 @@ import { ThemeSwitcher } from "widgets/ThemeSwitcher";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
 import { LangSwitcher } from "widgets/LangSwitcher/LangSwitcher";
 import { LangSwitcher2 } from "widgets/LangSwitcher/LangSwitcher2";
+import { Modal } from "shared/ui/Modal/Modal";
+import { LoginModal } from "features/AuthByUsername";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { userActions } from "entities/User/model/slice/userSlice";
 
 
 //
@@ -24,10 +29,24 @@ interface MainPageProps {
 
 export const MainPage: FC<MainPageProps> = (props) => {
 
-    const { className, children } = props
-    const {theme} = useTheme();
-    console.log(getComputedStyle(document.documentElement).getPropertyValue('--third-color'))
-    console.log(theme)
+const [isAuthOpened, setIsAuthOpened] = useState(false); // зачем мне этот стейт снаружи самого модуля? почему не вызвать внутри модуля?
+// видимо, д.б само окно, но еще д.б кнопка, вызывающая это окно. 
+const dispatch = useDispatch();
+
+const authData = useSelector(getUserAuthData); // добавить public api - index.ts
+console.log('authData', authData)
+
+const onLogout = useCallback( ()=> {
+    dispatch(userActions.logout())
+}, [dispatch])
+
+const onOpenModal = useCallback(()=>{
+    setIsAuthOpened (true) // сначала передавал внутрь модалки сеттер со значением false, теперь сам сеттер, обернутый ф-ей
+}, []) // какая зависимость. Что делает пустой массив, просто сохраняет и никогда не создает новую ссылку?
+
+const onCloseModal = useCallback(()=>{
+    setIsAuthOpened(false)
+}, [])
     return (
         <ConfigProvider
         theme={{
@@ -47,7 +66,6 @@ export const MainPage: FC<MainPageProps> = (props) => {
     >
 
         <div className={classNames(cls.MainPage, {}, [])}>
-
             <div className={classNames(cls.Header, {}, [])}>
                 <FindTodo className={classNames(cls.FindTodo, {}, [])}></FindTodo>
                 <FilterAccomplishmentBtns className={classNames(cls.FilterAccomplishmentBtns, {}, [])}></FilterAccomplishmentBtns>
@@ -55,6 +73,12 @@ export const MainPage: FC<MainPageProps> = (props) => {
                 <div className={classNames(cls.contextButtons, {}, [])}>
                     <ThemeSwitcher></ThemeSwitcher>
                     <LangSwitcher2></LangSwitcher2>
+                    {/* <button onClick={()=>setIsAuthOpened(true)}>Войти</button> - было. Запутался, почему когда-то ()=>{}, когда-то просто ф-я*/}
+                    { !authData && <button onClick={onOpenModal}>Войти</button>}
+                    { authData && <button onClick={onLogout}>Выйти</button>}
+                    <LoginModal isOpened={isAuthOpened} onClose={onCloseModal}/>
+                    {/* //! хули выебывается, когда 2 тега */}
+                    {/* </LoginModal> */}
                 </div>
 
             </div>

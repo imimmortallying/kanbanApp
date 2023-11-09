@@ -6,6 +6,7 @@ import { Button } from "antd";
 
 import Sun from "shared/assets/icons/sun.svg";
 import Moon from "shared/assets/icons/moon.svg";
+import { Theme } from "app/providers/ThemeProvider/ThemeContext";
 
 interface ThemeSwitcherProps {
     className?: string;
@@ -17,7 +18,7 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
 
     return (
         <button
-            className={classNames(cls.ThemeSwitcher, { [cls.active]: theme === 'dark' })}
+            className={classNames(cls.ThemeSwitcher, { [cls.active]: theme === Theme.DARK })}
             onClick={toggleTheme}
         >
             {

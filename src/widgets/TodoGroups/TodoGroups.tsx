@@ -140,6 +140,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                 </SortableContext>
             </div>
 
+                    {/* как работает ДНД портал? вставляет его в боди? позже вернись и используй свой компонент портал */}
             {createPortal(
                 <DragOverlay>
                     <div className={classNames(cls.portal, {}, [theme])}>

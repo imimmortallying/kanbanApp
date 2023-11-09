@@ -1,1 +1,1 @@
-export { FindTodo } from "features/todosReducer/ui/FindTodo";
+export { FindTodo } from "features/FindTodo/ui/FindTodo";
