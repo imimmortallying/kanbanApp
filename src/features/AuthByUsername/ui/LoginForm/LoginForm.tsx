@@ -23,7 +23,6 @@ export const LoginForm = ({ className,}: LoginFormProps) => {
         error, isLoading,
     } = useSelector(getLoginState); // обрати внимание на селектор - он возвращает значение, типизированное интерфейсом. Т.е. не напрямую
     // пишу, чтобы он вернул определенные свойства, а свойства из типа
-    console.log(error, isLoading)
 
 
     // я создаю 2 стейта, чтобы хранить onChange значения логина и пароля. Улби на onChange просто отправляет их в redux, зачем?
@@ -45,7 +44,9 @@ export const LoginForm = ({ className,}: LoginFormProps) => {
     return (
         <div className={classNames(cls.LoginForm, {}, [className])}>
 
-            {error && <div>{error}</div>}
+            {error && <div>{error}</div>} 
+            {/* выводить не ошибку при ошибке, а сообщение, ранимое в лок стейте, которое либо переопределяется ошибками
+            либо сообщение об успехе регистрации */}
             
             <input type="text" className={cls.input} onChange={onUsernameChange} placeholder='Введите логин' />
             <input type="text" className={cls.input} onChange={onPasswordChange} placeholder='Введите пароль' />
@@ -53,7 +54,9 @@ export const LoginForm = ({ className,}: LoginFormProps) => {
                 onClick={() => dispatch(loginByUsername({ username, password }))}
                 disabled={isLoading}
                 className={classNames(cls.button, {}, [className])} // тут нужно сделать флаг, т.е если disabled - то на кнопку вешать класс
-            >Войти</button>
+            >
+                Войти
+            </button>
             {/*Argument of type 'AsyncThunkAction<void, void, AsyncThunkConfig>' is not assignable to parameter of type 'AnyAction'
             чтобы это исправить (https://github.com/reduxjs/redux-toolkit/issues/2450 ---> https://redux-toolkit.js.org/tutorials/typescript), создал 
               app/hooks/hooks.ts - куда правильно запихать эти кастомные хуки?

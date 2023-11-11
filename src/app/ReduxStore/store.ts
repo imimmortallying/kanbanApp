@@ -4,6 +4,7 @@ import findingString from "features/findReducer/findSlice";
 import todos from "features/todosReducer/todosSlice";
 import groups from "features/groupsReducer/groupsSlice";
 import login from "features/AuthByUsername/model/slice/loginSlice";
+import registration from "features/AuthByUsername/model/slice/RegisterSlice";
 import user from "entities/User/model/slice/userSlice";
 
 
@@ -15,7 +16,8 @@ export const store =  configureStore({
         findingString: findingString,
         groups: groups,
         login:login, //  - то, что я отправляю на сервер?
-        user:user, // - то, что я получаю в ответ от сервера,
+        user:user,
+        registration: registration
     }
 })
 // Infer the `RootState` and `AppDispatch` types from the store itself

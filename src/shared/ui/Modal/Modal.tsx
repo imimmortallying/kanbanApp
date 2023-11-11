@@ -4,6 +4,8 @@ import cls from "./Modal.module.scss"
 import React, { ReactNode, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { Portal } from "../Portal/Portal";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
+import { useSelector } from "react-redux";
+import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 
 interface ModalProps {
     className?: string;
@@ -57,6 +59,13 @@ export const Modal = (props: ModalProps) => {
             }, ANIMATION_DELAY)
         }
     }, [onClose]);
+
+    const authData = useSelector(getUserAuthData); // логика закрывания модального окна при логине, если при нажатии на "войти" пользователь найден
+    useEffect( ()=> {
+        if (authData) {
+            closeHandler();
+        }
+    }, [authData])
 
     // при перерендеринге компонента создаются новые константы функций, новые ссылки. Чтобы избежать этого, использую useCallback (почему не useMemo?)
     const onKeyDown = useCallback((e: KeyboardEvent) => {

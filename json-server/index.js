@@ -39,6 +39,38 @@ server.post('/login', (req, res) => {
     }
 });
 
+// Эндпоинт для регистрации
+server.post('/registration', (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
+        const { users = [] } = db;
+
+        if (!username && !password) {
+            return res.status(400).json({ message: 'Не введен логин или пароль' });
+        }
+
+        // проверить, что пользователя в базе нет
+
+        const isUserExisting = users.some((user)=>user.username === username)
+        if (isUserExisting) {
+            return res.status(400).json({ message: 'User already exist' });
+        }
+
+        const userToSave = {username, password, data: {}}
+
+        db.users.push(userToSave)
+        fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 4));
+
+        return res.json(userToSave);
+
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({ message: e.message });
+    }
+});
+
 // проверяем, авторизован ли пользователь
 // eslint-disable-next-line
 server.use((req, res, next) => {
