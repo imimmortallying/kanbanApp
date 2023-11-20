@@ -5,8 +5,11 @@ import { Modal } from "shared/ui/Modal/Modal";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { ReactNode, useEffect, useState } from "react";
 import { RegistrationForm } from "../RegistrationForm/RegistrationForm";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { Button } from "antd";
+import { useTranslation } from "react-i18next";
+import { registrationActions } from "features/AuthByUsername/model/slice/RegisterSlice";
 
 interface LoginModalProps {
     className?: string;
@@ -16,10 +19,31 @@ interface LoginModalProps {
 
 export const LoginModal = ({ className, isOpened, onClose }: LoginModalProps) => {
 
+    const { t } = useTranslation();
+
+    const dispatch = useDispatch();
+
     const [isLoginOrRegistration, setIsLoginOrRegistration] = useState('login');
 
     const toggleModalInnerForm = () => {
-        isLoginOrRegistration === 'login' ? setIsLoginOrRegistration('registration') : setIsLoginOrRegistration('login')
+        isLoginOrRegistration === 'login' ? setIsLoginOrRegistration('registration') : setIsLoginOrRegistration('login'),
+            onMessageChange(''),
+            onModalStateChange('') // очищает сообщение, чтобы при переключении между формами не было ни сообщения, ни выделения инпутов красным
+        dispatch(registrationActions.removeResponseStatus()) // очищаю статус ответа, чтобы при переключении му регистрацией и логином пропадал ответ
+    }
+
+    // тут локально хранится сообщение, которое показывается при нажатии на кнопку регистрации
+    // если в redux получен как-то ответ от сервера - вывожу соотв. сообщение
+    // если пароли не совпадают, то меняю лок.стейт
+    const [messageOnClick, setMessageOnClick] = useState('');
+    const onMessageChange = (newMessage: string) => {
+        setMessageOnClick(newMessage)
+    }
+
+    // пробую сделать стейт = ошибка || ничего || успех, чтобы менять цвет полей и текста не из того, какое сообщение, а какой стейт этого сообщения
+    const [modalState, setModalState] = useState('');
+    const onModalStateChange = (newModalState: string) => {
+        setModalState(newModalState)
     }
 
 
@@ -34,20 +58,30 @@ export const LoginModal = ({ className, isOpened, onClose }: LoginModalProps) =>
         >
             {isLoginOrRegistration === 'login' &&
                 <>
-                    <LoginForm />
-                    <div className={cls.footer}>
-                        <div className={cls.text}>нет аккаунта? создай</div>
-                        <button onClick={toggleModalInnerForm}>Регистрация</button>
-                    </div>
+                        <LoginForm
+                            setMessageOnClick={setMessageOnClick}
+                            messageOnClick={messageOnClick}
+                            onModalStateChange={onModalStateChange}
+                            modalState={modalState} />
+                        <div className={cls.footer}>
+                            <div className={cls.text}>{t('Нет аккаунта?')}</div>
+                            <Button onClick={toggleModalInnerForm}>{t('Регистрация')}</Button>
+                        </div>
+
                 </>}
             {isLoginOrRegistration === 'registration' &&
                 <>
-                    <RegistrationForm />
-                    <div className={cls.footer}>
-                        <div className={cls.text}>уже есть аккаунт? войди</div>
-                        <button onClick={toggleModalInnerForm}>Вход</button>
-                    </div>
-
+                        <RegistrationForm
+                            className={cls.form}
+                            onMessageChange={onMessageChange}
+                            messageOnClick={messageOnClick}
+                            onModalStateChange={onModalStateChange}
+                            modalState={modalState}
+                        />
+                        <div className={cls.footer}>
+                            <div className={cls.text}>{t('Уже есть аккаунт?')}</div>
+                            <Button onClick={toggleModalInnerForm}>{t('Войти')}</Button>
+                        </div>
                 </>
             }
 

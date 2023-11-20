@@ -15,6 +15,10 @@ import { CSS } from "@dnd-kit/utilities"
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { DndContext, DragEndEvent, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { createPortal } from "react-dom";
+import { useAppDispatch } from "app/hooks/hooks";
+import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { request_DeleteGroup } from "./services/request_DeleteGroup";
+import { request_ChangeGroupName } from "./services/request_ChangeGroupName";
 
 
 //icons 
@@ -28,7 +32,11 @@ interface TodoGroupProps {
 
 export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupProps) => {
 
+    // юзернейм чтобы отправить на сервер
+    const authData = useSelector(getUserAuthData); 
+
     const dispatch = useDispatch();
+    const dispatchAsync = useAppDispatch();
 
     const todoIds = useSelector(selectFilteredTodoIds)
     const todos = useSelector(((state: any) => state.todos))
@@ -106,11 +114,17 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
                     onChange={handleInputChange}
                     // onClick={()=>setInputEditMode(true)}
                     onBlur={() => {
-                        dispatch(changeGroupName({ groupId, inputText }))
+                        authData
+                        ? dispatchAsync(request_ChangeGroupName({username: authData.username, groupId, newName: inputText}))
+                        : dispatch(changeGroupName({ groupId, inputText }))
+                        // dispatch(changeGroupName({ groupId, inputText }))
                         setInputEditMode(false)
                     }}
                     onKeyDown={(e) => {
                         if (e.key !== "Enter") return;
+                        authData
+                        ? dispatchAsync(request_ChangeGroupName({username: authData.username, groupId, newName: inputText}))
+                        : dispatch(changeGroupName({ groupId, inputText }))
                         setInputEditMode(false);
                     }}
 
@@ -118,7 +132,13 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
 
 
                 <button
-                    onClick={() => { dispatch(removeGroup(groupId)), dispatch(removeTodoGroup(groupId)) }}
+                    onClick={() => {
+                        //  dispatch(removeGroup(groupId)), 
+                        //  dispatch(removeTodoGroup(groupId)) 
+                        authData 
+                        ? dispatchAsync(request_DeleteGroup({username: authData.username, groupId}))
+                        : dispatch(removeGroup(groupId)) && dispatch(removeTodoGroup(groupId)) 
+                        }}
                     className={classNames(cls.remove_button, {}, [])}
                 >
                     {<TrashIcon className={classNames(cls.remove_icon, {}, [])}/>}
@@ -140,7 +160,7 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
 
             <div className={classNames(cls.TodoGroup_footer, {}, [])}>
 
-                <AddTodo groupName={groupId}></AddTodo>
+                <AddTodo groupId={groupId}></AddTodo>
 
             </div>
 

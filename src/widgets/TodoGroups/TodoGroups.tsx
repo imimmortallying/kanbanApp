@@ -10,9 +10,14 @@ import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, PointerSensor, us
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { NewTodo } from "features/NewTodo/NewTodo";
-import { changeDraggingTodoGroup, swapTodos } from "features/todosReducer/todosSlice";
+import { changeDraggingTodoGroup, selectTodos, swapTodos } from "features/todosReducer/todosSlice";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
 import { useTranslation } from "react-i18next";
+import { useAppDispatch } from "app/hooks/hooks";
+import { request_AddNewGroup } from "./services/request_AddNewGroup";
+import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { request_SwapGroups } from "./services/request_SwapGroups";
+import { request_SwapTodos } from "./services/request_SwapTodos";
 
 
 interface TodoGroupsProps {
@@ -20,6 +25,10 @@ interface TodoGroupsProps {
 }
 
 export const TodoGroups = ({ className }: TodoGroupsProps) => {
+    // юзернейм чтобы отправить на сервер
+    const authData = useSelector(getUserAuthData); 
+
+    const todos = useSelector(selectTodos);
 
     // i18n
     const { t } = useTranslation();
@@ -28,20 +37,18 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
 
     const groups = useSelector(selectGroupById)
     const dispatch = useDispatch();
-    console.log(groups)
+    const dispatchAsync = useAppDispatch();
+
+    
 
     //dnd  group
-    // попытка непонятно нахуя прикрутить memo. Передал как items контекста групп - нихуя не изменилось. См todoGroup l118
-    // const memoGroupIds = useMemo(()=>{
-    //     return groups.map((group:any)=>group.id)
-    // }, [groups])
 
     const [activeGroup, setActiveGroup] = useState(null);
 
     function onDragStart(event: any) {
         if (event.active.data.current?.type === "Group") {
             setActiveGroup(event.active.data.current.group);
-            console.log(event.active.data.current.group)
+            // console.log(event.active.data.current.group)
             return;
         }
 
@@ -52,23 +59,35 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
     }
     function onDragEnd(event: DragEndEvent) {
         // обернул тело в условие - это сохраняет от ошибки - отправки действия при переносе туду, а не группы
-
         setActiveGroup(null);
         setActiveTodo(null);
+        
+        //! request на
+        // при отпускании группы отправить текущий массив на сервер, перезаписать его, чтобы изменить порядок,
+        // потом перезаписать redux.
+        // получается так, что сначала я меняю redux, затем этот массив отправляю на сервер и перезаписываю. Если все успешно, 
+        // то получаю ответ, сравниваю redux массив групп и ответ с сервера, если отличаются - перезаписываю редакс. Но это случится только
+        // если произошла ошибка и массив на сервере не изменился
+        console.log(groups)
+        if (event.active.data.current?.type === "Group" && authData) {
+            dispatchAsync(request_SwapGroups({groups, username: authData.username}))
+        }
 
+        if (event.active.data.current?.type === "Todo" && authData) {
+            dispatchAsync(request_SwapTodos({todos, username: authData.username}))
+        }
+        
         const { active, over } = event;
         if (!over) return;
         const activeGroupId = active.id;
         const overGroupId = over.id;
         if (activeGroupId === overGroupId) return;
 
-        // if (event.active.data.current?.type === "Group") {
         //! bag
         // сначала использовал эту часть, чтобы менять местами группы. Затем вынес этот код в драгОвер, т.е. срабатывание при наведении на др элемент
         // чтобы избежать бага - туду группы меняются местами, а хочу сделать так, чтобы группы сдвигались, для этого и вынес, т.к. при переносе группы
         // будет происходить action при каждом наведении на др группу. Но это скачалось на плавности отрисовки
         //     dispatch(swapGroups({ activeGroupId, overGroupId }))
-        // }
 
     }
 
@@ -88,6 +107,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
 
         if (event.active.data.current?.type === "Group") {
             dispatch(swapGroups({ activeGroupId, overGroupId }))
+            console.log('123')
         }
         //
 
@@ -108,7 +128,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
         const isOverAColumn = over.data.current?.type === 'Group';
 
         if (isActiveATask && isOverAColumn) {
-            console.log(over)
+            // console.log(over)
             dispatch(changeDraggingTodoGroup({ activeId: activeId, newGroup: over.id }))
         }
 
@@ -134,7 +154,13 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                         return <TodoGroup groupId={group.id} key={crypto.randomUUID()} groupName={group.name} group={group}></TodoGroup>
                     })}
                     <Button className={classNames(cls.newGroup_btn, {}, [className])} 
-                        onClick={() => { dispatch(addGroup(crypto.randomUUID())) }}>
+                        onClick={() => { 
+                            authData
+                            ? dispatchAsync(request_AddNewGroup({username: authData.username}))
+                            // dispatchAsync(request_AddNewGroup({username: authData.username}))
+                            : dispatch(addGroup(crypto.randomUUID())) // локальное изменение redux
+                            
+                            }}>
                             {t("Новая группа")}
                     </Button>
                 </SortableContext>

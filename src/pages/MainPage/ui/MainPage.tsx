@@ -19,6 +19,11 @@ import { LoginModal } from "features/AuthByUsername";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 import { userActions } from "entities/User/model/slice/userSlice";
+import { useAppDispatch } from "app/hooks/hooks";
+import { InitReduxByToken } from "features/AuthByUsername/model/services/InitReduxByToken";
+import { clearGroupsState, defaultGroupsState } from "features/groupsReducer/groupsSlice";
+import { clearTodosState, defaultTodosState } from "features/todosReducer/todosSlice";
+import { useTranslation } from "react-i18next";
 
 
 //
@@ -31,10 +36,32 @@ export const MainPage: FC<MainPageProps> = (props) => {
 
 const [isAuthOpened, setIsAuthOpened] = useState(false); // зачем мне этот стейт снаружи самого модуля? почему не вызвать внутри модуля?
 // видимо, д.б само окно, но еще д.б кнопка, вызывающая это окно. 
-const dispatch = useDispatch();
 
+const { t } = useTranslation();
+
+const dispatch = useDispatch();
+const dispatchAsync = useAppDispatch();
 const authData = useSelector(getUserAuthData); // добавить public api - index.ts
-console.log('authData', authData)
+
+useEffect(()=>{
+    console.log('authData', authData)
+    //тут каждый раз при изменении токена (удалении при выходе или его получении) инициализирую redux содержимым сервера
+    // если часть стейта, прокладка между localStorage, заполнена, то отправить запрос а сервер, иначе заполнить как для невошедшего пользователя
+    // сейчас хотя бы просто пустую рисовку
+    if (authData) {
+        console.log('initByToken', { username: authData.username, password: authData.password})
+        dispatchAsync(InitReduxByToken({ username: authData.username, password: authData.password})) // в редаксе как loginByUsername?
+    } else {
+        
+        // если не вошел
+        // добавить pointer events
+        dispatch(defaultGroupsState())
+        // dispatch(clearGroupsState())
+        dispatch(defaultTodosState())
+        // dispatch(clearTodosState())
+    }
+    
+}, [authData])
 
 const onLogout = useCallback( ()=> {
     dispatch(userActions.logout())
@@ -74,8 +101,8 @@ const onCloseModal = useCallback(()=>{
                     <ThemeSwitcher></ThemeSwitcher>
                     <LangSwitcher2></LangSwitcher2>
                     {/* <button onClick={()=>setIsAuthOpened(true)}>Войти</button> - было. Запутался, почему когда-то ()=>{}, когда-то просто ф-я*/}
-                    { !authData && <button onClick={onOpenModal}>Войти</button>}
-                    { authData && <button onClick={onLogout}>Выйти</button>}
+                    { !authData && <Button onClick={onOpenModal}>{t('Войти')}</Button>}
+                    { authData && <Button onClick={onLogout}>{t('Выйти')}</Button>}
                     <LoginModal isOpened={isAuthOpened} onClose={onCloseModal}/>
                     {/* //! хули выебывается, когда 2 тега */}
                     {/* </LoginModal> */}

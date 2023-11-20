@@ -4,26 +4,29 @@ import { loginByUsername } from "../services/loginByUsername";
 export const loginSlice = createSlice({
     name: 'login',
     initialState: {},
-    reducers:{
+    reducers: {
 
     },
-    extraReducers: (builder) => { 
+    extraReducers: (builder) => {
         builder
             .addCase(loginByUsername.pending, (state) => {
                 //@ts-ignore
-                state.error = undefined;
+                state.status = undefined;
                 //@ts-ignore
                 state.isLoading = true;
             })
             .addCase(loginByUsername.fulfilled, (state, action) => {
                 //@ts-ignore
                 state.isLoading = false;
+                //@ts-ignore
+                state.status = action.payload;
             })
             .addCase(loginByUsername.rejected, (state, action) => {
                 //@ts-ignore
                 state.isLoading = false;
                 //@ts-ignore
-                state.error = action.payload;
+                state.status = action.payload;
+
             });
     },
 

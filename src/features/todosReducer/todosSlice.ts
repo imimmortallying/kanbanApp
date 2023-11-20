@@ -14,19 +14,51 @@ interface Action {
     filter?: string,
 }
 
+const initialState = [
+    { group: 'group1', text: 'Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше', id: '1', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
+    { group: 'group1', text: 'Сходить на рынок', id: '2', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
+    { group: 'group2', text: 'Убраться на столе', id: '3', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
+    { group: 'group2', text: 'Сходить под себя', id: '4', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
+    { group: 'group3', text: 'Убраться в комнате', id: '5', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
+    { group: 'group3', text: 'Чифирнуть', id: '6', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
+]
 
 export const todosSlice = createSlice({
     name: 'todos',
-    initialState: [
-        // { group: 'group1', text: 'Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше', id: '1', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
-        // { group: 'group1', text: 'Сходить на рынок', id: '2', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
-        // { group: 'group2', text: 'Убраться на столе', id: '3', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
-        // { group: 'group2', text: 'Сходить под себя', id: '4', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
-        // { group: 'group3', text: 'Убраться в комнате', id: '5', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
-        // { group: 'group3', text: 'Чифирнуть', id: '6', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
-    ],
+    initialState: [],
     reducers: {
+        //! багулина: при перемещении туду отправляется экшен перетаскивания группы. TodoGroups
+        updateTodoResponse: (state, action) => {
+           return state.map((i) => {
+                if (i.id === action.payload.todoId) {
+                    console.log(action.payload.newTodo)
+                    i = action.payload.newTodo
+                }
+                return i
+            })
+        },
+        deleteTodoResponse: (state, action) => {
+            state.forEach((i, index) => {
+                if (i.id === action.payload) {
+                    state.splice(index, 1)
+                }
+            })
+        },
+        addTodoResponse: (state, action) => {
+            
+            state.push(action.payload)
 
+        },
+        clearTodosState: (state) => {
+            return state = [];
+        },
+        defaultTodosState: (state) => {
+            return state = initialState;
+        },
+        initTodosState: (state, action) => {
+            return state = action.payload;
+        },
+        // выше - работа с сервером
         add: (state, action) => {
             
             state.push({ group: action.payload.group, id: action.payload.id, text: '', completed: false, importance: 'not chosen', description: '' })
@@ -100,12 +132,16 @@ export const todosSlice = createSlice({
 
 
 export default todosSlice.reducer
-export const { add, toggle, remove, changeImportance, changeDesctiption, removeTodoGroup, changeTodoText, swapTodos, changeDraggingTodoGroup} = todosSlice.actions
+export const { clearTodosState, add, toggle, remove, changeImportance, changeDesctiption,
+     removeTodoGroup, changeTodoText, swapTodos, changeDraggingTodoGroup, initTodosState, addTodoResponse, deleteTodoResponse,
+     updateTodoResponse, defaultTodosState
+    } = todosSlice.actions
 
 export const selectTodoById = (state:any, todoId:any) => { // используется для отрисовки туду, исходя из полученного id. Todo.tsx
     return state.todos.find((todo:any) => todo.id === todoId)
 }
 
+export const selectTodos = (state:any) => state.todos;
 //! ниже идет мемоизация при помощи reselect библиотеки
 // способ работы со стейтом вместо const todoIds = useSelector(selectTodoIds, shallowEqual) который позволяет:
 // 1) заменить shallowEqual, чтобы не вызывать ре-рендеринг всего списка задач, связанного с тем, что .map возвращает новую ссылку

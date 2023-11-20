@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// import { initState } from "features/groupsReducer/groupsSlice";
 import { USER_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 
 export const userSlice = createSlice({
@@ -9,6 +10,9 @@ export const userSlice = createSlice({
             //@ts-ignore
             state.authData = action.payload // как правильно создать и заполнить свойство объекта?
             // return state = action.payload
+
+            //! добавить инициализацию групп и туду - правильно ли вызывать action тут?
+            // initState(action.payload.)
         },
         initAuthData: (state, action: PayloadAction<string>) => { // 32.50 это логика проверки того, авторизован ли пользователь, проверка наличия токена
             //  Как это работает в app.tsx?

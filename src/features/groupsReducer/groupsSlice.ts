@@ -3,16 +3,50 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { selectFilteredTodoIds, selectFilteredTodos } from 'features/todosReducer/todosSlice' // чтобы получить селектор id внутри группы
 import { useSelector } from 'react-redux'
 
-
+const initialState = [
+    { id: 'group1', name: 'group1' },
+    { id: 'group2', name: 'group2' },
+    { id: 'group3', name: 'group3' },
+]
 
 export const groupsSlice = createSlice({
     name: 'groups',
-    initialState: [
-        { id: 'group1', name: 'group1' },
-        { id: 'group2', name: 'group2' },
-        { id: 'group3', name: 'group3' },
-    ],
+    initialState: [],
     reducers: {
+        changeGroupNameResponse: (state, action) => {
+            state.forEach((i)=>{
+                if (i.id === action.payload.groupId) {
+                    i.name = action.payload.currentGroupName
+                }
+            })
+        },
+        swapGroupsResponse: (state, action) => { 
+            if (state != action.payload) {
+                // console.log('payload', action.payload)
+                return state = action.payload
+            }
+            return
+        },
+        removeGroupResponse: (state, action) => { 
+            state.map((i, index) => {
+                if (i.id === action.payload) {
+                    state.splice(index, 1)
+                }
+            })
+        },
+        addGroupResponse: (state, action) => {
+            state.push({ name: action.payload.name, id: action.payload.id })
+        },
+        clearGroupsState: (state) => {
+            return state = [];
+        },
+        defaultGroupsState: (state) => {
+            return state = initialState;
+        },
+        initGroupsState: (state, action) => {
+            return state = action.payload;
+        },
+        // выше - работа с сервером
         addGroup: (state, action) => {
             state.push({ name: 'new group', id: action.payload })
         },
@@ -50,7 +84,8 @@ export const groupsSlice = createSlice({
 
 
 export default groupsSlice.reducer
-export const { addGroup, removeGroup, changeGroupName, swapGroups } = groupsSlice.actions
+export const { addGroup, removeGroup, changeGroupName, swapGroups, initGroupsState,
+     clearGroupsState, addGroupResponse, removeGroupResponse, swapGroupsResponse, changeGroupNameResponse, defaultGroupsState } = groupsSlice.actions
 
 export const selectGroupById = ((state: any) => state.groups)
 export const todos = ((state: any) => state.todos)

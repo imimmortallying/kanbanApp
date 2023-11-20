@@ -1,7 +1,11 @@
 .LoginModal {
+
     display: flex;
     flex-direction: column;
+
     gap: 40px;
+
+    
 }
 
 .footer {
@@ -14,3 +18,8 @@
     padding-top: 5px;
     border-top: 2px solid var(--third-color);
 }
+
+.form {
+    // border: 3px var(--third-color) solid;
+}
+

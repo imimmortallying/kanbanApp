@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
-import { userActions } from "entities/User/model/slice/userSlice";
-import { User } from "entities/User/model/types/user";
 import { USER_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 
 interface RegisterUser {
@@ -10,7 +8,7 @@ interface RegisterUser {
 }
 
 // проверить 
-export const RegisterUser = createAsyncThunk <User, RegisterUser, { rejectValue: string }>(
+export const RegisterUser = createAsyncThunk <Number, RegisterUser, { rejectValue: string }>(
     'Registration/RegisterUser',
     async (authData, thunkAPI) => {
         // console.log('regist:', authData)
@@ -26,11 +24,12 @@ export const RegisterUser = createAsyncThunk <User, RegisterUser, { rejectValue:
 // когда разлогинился, данные из localStorage удаляем
 
             // thunkAPI.dispatch(userActions.setAuthData(response.data)) // если добавить, сразу будет логин тем, чем зарегался
-            return response.data
+            // console.log(response)
+            return response.status
         } catch (e) {
-            console.log(e.response.data.message);
+            // console.log(e.response.data.message);
             // добавить условие на входящую ошибку, чтобы для каждой задать свой текст, который нужно будет перевести
-            return thunkAPI.rejectWithValue(e.response.data.message) // тут перевод будет 29.34
+            return thunkAPI.rejectWithValue(e.response.status) // тут перевод будет 29.34
         }
 
     }

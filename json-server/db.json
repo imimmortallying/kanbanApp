@@ -6,7 +6,15 @@
             "data": {
                 "todos": [
                     {
-                        "group": "group1",
+                        "group": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
+                        "text": "Убраться на столе",
+                        "id": "2",
+                        "completed": "false",
+                        "importance": "not chosen",
+                        "description": "Сходить нужно до прихода родителей домой"
+                    },
+                    {
+                        "group": "f985287e-7fde-453c-8b41-134052331a1f",
                         "text": "Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше",
                         "id": "1",
                         "completed": "false",
@@ -15,64 +23,122 @@
                     },
                     {
                         "group": "group1",
-                        "text": "Убраться на столе",
-                        "id": "2",
-                        "completed": "true",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
+                        "id": "7b3c08d6-08b1-4c9e-bbae-708f42cd9436",
+                        "text": "Поссать",
+                        "completed": false,
+                        "importance": "not chosen"
                     },
                     {
-                        "group": "group2",
-                        "text": "Сходить на рынок",
-                        "id": "3",
-                        "completed": "false",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
+                        "group": "f985287e-7fde-453c-8b41-134052331a1f",
+                        "id": "3229c277-ace9-4ae5-80d9-94796cdb942a",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
                     },
                     {
-                        "group": "group2",
-                        "text": "Сходить под себя",
-                        "id": "4",
-                        "completed": "false",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group3",
-                        "text": "Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше",
-                        "id": "5",
-                        "completed": "false",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group3",
-                        "text": "Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше",
-                        "id": "6",
-                        "completed": "false",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
+                        "group": "68a75f85-6c4d-4476-b7b3-9ffbc247aa8f",
+                        "id": "3a77ca83-a13f-4919-a422-bd8c5447221f",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
                     }
                 ],
                 "groups": [
                     {
-                        "name": "group1",
-                        "id": "group1"
+                        "name": "new group",
+                        "id": "68a75f85-6c4d-4476-b7b3-9ffbc247aa8f"
                     },
                     {
-                        "name": "group2",
-                        "id": "grou2"
+                        "id": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
+                        "name": "new group"
                     },
                     {
-                        "name": "group3",
-                        "id": "group3"
+                        "name": "После обеда",
+                        "id": "f985287e-7fde-453c-8b41-134052331a1f"
                     }
                 ]
             }
         },
         {
-            "username": "123",
-            "password": "11",
+            "username": "admin",
+            "password": "420",
+            "data": {
+                "todos": [
+                    {
+                        "group": "group1",
+                        "text": "Не забыть принять таблетки",
+                        "id": "3",
+                        "completed": "false",
+                        "importance": "U&I",
+                        "description": "Сходить нужно до прихода родителей домой"
+                    },
+                    {
+                        "group": "group2",
+                        "text": "Чифирнуть бы ништяк да голяк",
+                        "id": "1",
+                        "completed": true,
+                        "importance": "!U&I",
+                        "description": "Сходить нужно до прихода родителей домой"
+                    },
+                    {
+                        "group": "group2",
+                        "text": "Заехать партейку в доту",
+                        "id": "2",
+                        "completed": false,
+                        "importance": "!U&I",
+                        "description": "Сходить нужно до прихода родителей домой"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "groupsdsd",
+                        "id": "group1"
+                    },
+                    {
+                        "name": "group2",
+                        "id": "group2"
+                    }
+                ]
+            }
+        },
+        {
+            "username": "j",
+            "password": "j",
+            "data": {}
+        },
+        {
+            "username": "k",
+            "password": "k",
+            "data": {}
+        },
+        {
+            "username": "q",
+            "password": "g",
+            "data": {}
+        },
+        {
+            "username": "zzz",
+            "password": "z",
+            "data": {}
+        },
+        {
+            "username": "za",
+            "password": "z",
+            "data": {}
+        },
+        {
+            "username": "z",
+            "password": "zz",
+            "data": {}
+        },
+        {
+            "username": "aa",
+            "password": "a",
+            "data": {}
+        },
+        {
+            "username": "ф",
+            "password": "ф",
             "data": {}
         }
     ]
