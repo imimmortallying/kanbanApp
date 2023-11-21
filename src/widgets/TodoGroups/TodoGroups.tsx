@@ -39,7 +39,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
     const dispatch = useDispatch();
     const dispatchAsync = useAppDispatch();
 
-    
+    console.log('groups', groups)
 
     //dnd  group
 
@@ -61,14 +61,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
         // обернул тело в условие - это сохраняет от ошибки - отправки действия при переносе туду, а не группы
         setActiveGroup(null);
         setActiveTodo(null);
-        
-        //! request на
-        // при отпускании группы отправить текущий массив на сервер, перезаписать его, чтобы изменить порядок,
-        // потом перезаписать redux.
-        // получается так, что сначала я меняю redux, затем этот массив отправляю на сервер и перезаписываю. Если все успешно, 
-        // то получаю ответ, сравниваю redux массив групп и ответ с сервера, если отличаются - перезаписываю редакс. Но это случится только
-        // если произошла ошибка и массив на сервере не изменился
-        console.log(groups)
+
         if (event.active.data.current?.type === "Group" && authData) {
             dispatchAsync(request_SwapGroups({groups, username: authData.username}))
         }
@@ -120,8 +113,9 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
 
             if (event.active.data.current.todo.group !== event.over.data.current.todo.group) {
 
-
+                console.log('!!!')
                 dispatch(changeDraggingTodoGroup({ activeId: activeId, newGroup: event.over.data.current.todo.group }))
+                // если одну задачу держу над другой. Но почему action - changeDraggingTodo GROUP?! и зачем тут новая группа?
             }
         }
 
@@ -151,7 +145,8 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                 <SortableContext items={groups}>
                     {groups.map((group: any) => {
                         // для dnd добавил group={group}
-                        return <TodoGroup groupId={group.id} key={crypto.randomUUID()} groupName={group.name} group={group}></TodoGroup>
+                        // return <TodoGroup groupId={group.id} key={crypto.randomUUID()} groupName={group.name} group={group}></TodoGroup>
+                        return <TodoGroup groupId={group.id} key={group.id} groupName={group.name} group={group}></TodoGroup>
                     })}
                     <Button className={classNames(cls.newGroup_btn, {}, [className])} 
                         onClick={() => { 
@@ -159,6 +154,7 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                             ? dispatchAsync(request_AddNewGroup({username: authData.username}))
                             // dispatchAsync(request_AddNewGroup({username: authData.username}))
                             : dispatch(addGroup(crypto.randomUUID())) // локальное изменение redux
+                            // dispatch(addGroup(crypto.randomUUID()))
                             
                             }}>
                             {t("Новая группа")}

@@ -65,7 +65,7 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
 
     const style = {
         transition,
-        transform: CSS.Transform.toString(transform)
+        transform: CSS.Transform.toString(transform),
     };
 
     // тот, который рисуется под перетаскиваемым
@@ -74,6 +74,7 @@ export const NewTodo = ({ className, id }: NewTodoProps) => {
             className={classNames(cls.Todo_dragging, {}, [])}
             ref={setNodeRef}
             style={style}
+
         >
 
         </div>

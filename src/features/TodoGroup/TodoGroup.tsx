@@ -7,7 +7,7 @@ import { NewTodo } from "features/NewTodo/NewTodo";
 import { AddTodo } from "features/AddTodo";
 import { Button, Input } from "antd";
 import { changeGroupName, removeGroup } from "features/groupsReducer/groupsSlice";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import TrashIcon from "shared/assets/icons/TrashIcon.svg";
 import { createSelector } from "reselect";
 
@@ -47,7 +47,10 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
         })
     }
 
+    // const groupedTodoIds = groupeTodoIds(todoIds, todos)
     const groupedTodoIds = groupeTodoIds(todoIds, todos)
+
+    // console.log('todo ids', groupedTodoIds)
 
     const [inputText, setInputText] = useState(groupName);
     const handleInputChange = (e: any) => {
@@ -68,7 +71,7 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
 
     const style = {
         transition,
-        transform: CSS.Transform.toString(transform)
+        // transform: CSS.Transform.toString(transform)
     };
 
     if (isDragging) {
@@ -125,6 +128,7 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
                         authData
                         ? dispatchAsync(request_ChangeGroupName({username: authData.username, groupId, newName: inputText}))
                         : dispatch(changeGroupName({ groupId, inputText }))
+                        // dispatch(changeGroupName({ groupId, inputText }))
                         setInputEditMode(false);
                     }}
 
@@ -138,6 +142,7 @@ export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupPro
                         authData 
                         ? dispatchAsync(request_DeleteGroup({username: authData.username, groupId}))
                         : dispatch(removeGroup(groupId)) && dispatch(removeTodoGroup(groupId)) 
+                        // dispatch(removeGroup(groupId)) && dispatch(removeTodoGroup(groupId)) 
                         }}
                     className={classNames(cls.remove_button, {}, [])}
                 >
