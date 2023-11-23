@@ -43,7 +43,15 @@ export const MainPage: FC<MainPageProps> = (props) => {
     const dispatchAsync = useAppDispatch();
     const authData = useSelector(getUserAuthData); // добавить public api - index.ts
 
+
+        useEffect( ()=> {
+        dispatch(userActions.initAuthData())
+    }, [dispatch])
     useEffect(() => {
+
+  
+
+
         console.log('authData', authData)
         //тут каждый раз при изменении токена (удалении при выходе или его получении) инициализирую redux содержимым сервера
         // если часть стейта, прокладка между localStorage, заполнена, то отправить запрос а сервер, иначе заполнить как для невошедшего пользователя
@@ -53,14 +61,16 @@ export const MainPage: FC<MainPageProps> = (props) => {
             dispatchAsync(InitReduxByToken({ username: authData.username, password: authData.password })) // в редаксе как loginByUsername?
 
             //! тут явно можно вынести этот иф, например асинхронно
-            if (!authData) {
-                console.log('NO authData', authData)
-                // если не вошел
-                dispatch(defaultGroupsState())
-                // dispatch(clearGroupsState())
-                dispatch(defaultTodosState())
-                // dispatch(clearTodosState())
-            }
+
+        }
+
+        if (!authData) {
+            console.log('NO authData', authData)
+            // если не вошел
+            dispatch(defaultGroupsState())
+            // dispatch(clearGroupsState())
+            dispatch(defaultTodosState())
+            // dispatch(clearTodosState())
         }
 
 

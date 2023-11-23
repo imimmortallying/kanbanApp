@@ -19,9 +19,9 @@ import { useAppDispatch } from "./hooks/hooks";
 const App = () => {
 
     const dispatch = useDispatch ();
-    useEffect( ()=> {
-        dispatch(userActions.initAuthData())
-    }, [dispatch]) // 32.50 это логика проверки того, авторизован ли пользователь, проверка наличия токена. Как это работает?
+    // useEffect( ()=> {
+    //     dispatch(userActions.initAuthData())
+    // }, [dispatch]) // 32.50 это логика проверки того, авторизован ли пользователь, проверка наличия токена. Как это работает?
     // работает лишь 1 раз!
 
 

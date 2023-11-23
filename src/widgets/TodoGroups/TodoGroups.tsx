@@ -148,7 +148,10 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                         // return <TodoGroup groupId={group.id} key={crypto.randomUUID()} groupName={group.name} group={group}></TodoGroup>
                         return <TodoGroup groupId={group.id} key={group.id} groupName={group.name} group={group}></TodoGroup>
                     })}
-                    <Button className={classNames(cls.newGroup_btn, {}, [className])} 
+
+                    {groups.length === 0
+                    ? ''
+                    : <Button className={classNames(cls.newGroup_btn, {}, [className])} 
                         onClick={() => { 
                             authData
                             ? dispatchAsync(request_AddNewGroup({username: authData.username}))
@@ -159,6 +162,9 @@ export const TodoGroups = ({ className }: TodoGroupsProps) => {
                             }}>
                             {t("Новая группа")}
                     </Button>
+                    }
+
+                                        
                 </SortableContext>
             </div>
 

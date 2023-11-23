@@ -38,16 +38,16 @@
                 ],
                 "groups": [
                     {
-                        "id": "01528cd3-50c4-4539-867b-0b4e9e40c8d0",
-                        "name": "new group"
-                    },
-                    {
                         "id": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
                         "name": "new group"
                     },
                     {
                         "name": "После обеда",
                         "id": "f985287e-7fde-453c-8b41-134052331a1f"
+                    },
+                    {
+                        "id": "9cb2ac28-0d89-48a8-b84a-045b53295711",
+                        "name": "new group"
                     }
                 ]
             }
@@ -58,11 +58,19 @@
             "data": {
                 "todos": [
                     {
-                        "group": "group1",
+                        "group": "group2",
                         "text": "Не забыть принять таблетки",
                         "id": "3",
                         "completed": "false",
                         "importance": "U&I",
+                        "description": "Сходить нужно до прихода родителей домой"
+                    },
+                    {
+                        "group": "group1",
+                        "text": "Заехать партейку в доту",
+                        "id": "2",
+                        "completed": false,
+                        "importance": "!U&I",
                         "description": "Сходить нужно до прихода родителей домой"
                     },
                     {
@@ -72,19 +80,15 @@
                         "completed": true,
                         "importance": "!U&I",
                         "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group2",
-                        "text": "Заехать партейку в доту",
-                        "id": "2",
-                        "completed": false,
-                        "importance": "!U&I",
-                        "description": "Сходить нужно до прихода родителей домой"
                     }
                 ],
                 "groups": [
                     {
-                        "name": "groupsdsd",
+                        "name": "new group",
+                        "id": "3e340d39-715d-496a-8355-ab10bf6b600c"
+                    },
+                    {
+                        "name": "group1",
                         "id": "group1"
                     },
                     {
