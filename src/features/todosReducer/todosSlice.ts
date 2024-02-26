@@ -15,12 +15,12 @@ interface Action {
 }
 
 const initialState = [
-    { group: 'group1', text: 'Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше', id: '1', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
+    { group: 'group1', text: 'Существуют две основные трактовки понятия «текст»: имманентная (расширенная, философски нагруженная) и репрезентативная (более частная). Имманентный подход подразумевает отношение к тексту как к автономной реальности, нацеленность на выявление его внутренней структуры.', id: '1', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
     { group: 'group1', text: 'Сходить на рынок', id: '2', completed: true, importance: 'not chosen', description: 'Сходить нужно до прихода родителей домой',  },
     { group: 'group2', text: 'Убраться на столе', id: '3', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
-    { group: 'group2', text: 'Сходить под себя', id: '4', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
+    { group: 'group2', text: 'Позвонить брату', id: '4', completed: true, importance: 'not chosen', description: 'Можно в любое время',  },
     { group: 'group3', text: 'Убраться в комнате', id: '5', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
-    { group: 'group3', text: 'Чифирнуть', id: '6', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
+    { group: 'group3', text: 'Поставить чайник', id: '6', completed: true, importance: 'not chosen', description: 'Нахуй надо',  },
 ]
 
 export const todosSlice = createSlice({

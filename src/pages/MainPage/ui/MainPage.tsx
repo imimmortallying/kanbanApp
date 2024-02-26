@@ -34,6 +34,7 @@ interface MainPageProps {
 
 export const MainPage: FC<MainPageProps> = (props) => {
 
+
     const [isAuthOpened, setIsAuthOpened] = useState(false); // зачем мне этот стейт снаружи самого модуля? почему не вызвать внутри модуля?
     // видимо, д.б само окно, но еще д.б кнопка, вызывающая это окно. 
 
