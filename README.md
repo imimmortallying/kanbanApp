@@ -20,3 +20,4 @@ https://imimmortallying.github.io/kanbanApp/
 * Json-server as an imitation of backend
 * dnd-kit library for dragging and droppoing
 * i18next library for switching language
+* Sass
