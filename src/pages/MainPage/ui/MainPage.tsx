@@ -7,22 +7,18 @@ import { Button, Checkbox, ConfigProvider } from 'antd';
 //redux toolkit
 import { FilterAccomplishmentBtns } from "features/FilterAcomplishmentBtns";
 import { FilterImportance } from "features/FilterImportance";
-import { AddTodo } from "features/AddTodo";
 import { FindTodo } from "features/FindTodo";
 import { TodoGroups } from "widgets/TodoGroups/TodoGroups";
 import { ThemeSwitcher } from "widgets/ThemeSwitcher";
-import { useTheme } from "app/providers/ThemeProvider/useTheme";
-import { LangSwitcher } from "widgets/LangSwitcher/LangSwitcher";
 import { LangSwitcher2 } from "widgets/LangSwitcher/LangSwitcher2";
-import { Modal } from "shared/ui/Modal/Modal";
 import { LoginModal } from "features/AuthByUsername";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 import { userActions } from "entities/User/model/slice/userSlice";
 import { useAppDispatch } from "app/hooks/hooks";
 import { InitReduxByToken } from "features/AuthByUsername/model/services/InitReduxByToken";
-import { clearGroupsState, defaultGroupsState } from "features/groupsReducer/groupsSlice";
-import { clearTodosState, defaultTodosState } from "features/todosReducer/todosSlice";
+import { defaultGroupsState } from "features/groupsReducer/groupsSlice";
+import { defaultTodosState } from "features/todosReducer/todosSlice";
 import { useTranslation } from "react-i18next";
 
 
