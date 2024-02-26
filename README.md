@@ -2,7 +2,7 @@
 
 ## About project:
 Kanban board with the ability to filter (by completion or by importance) and find tasks.
-Tasks and groups of tasks can be draged and droped.
+Tasks and groups of tasks can be draged and dropped.
 There are also opportunities for changing language (ru/en), switching theme, registration and authorisation.
 
 ## See on GitHub Pages:
