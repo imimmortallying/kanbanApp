@@ -5,7 +5,8 @@ import React, { ReactNode, lazy, useCallback, useEffect, useRef, useState } from
 import { Portal } from "../Portal/Portal";
 import { useTheme } from "app/providers/ThemeProvider/useTheme";
 import { useSelector } from "react-redux";
-import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { selectUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import { useAppSelector } from "shared/lib/store/redux";
 
 interface ModalProps {
     className?: string;
@@ -60,7 +61,7 @@ export const Modal = (props: ModalProps) => {
         }
     }, [onClose]);
 
-    const authData = useSelector(getUserAuthData); // логика закрывания модального окна при логине, если при нажатии на "войти" пользователь найден
+    const authData = useAppSelector(selectUserAuthData); // логика закрывания модального окна при логине, если при нажатии на "войти" пользователь найден
     useEffect( ()=> {
         if (authData) {
             closeHandler();

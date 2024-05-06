@@ -1,228 +1,201 @@
-import { classNames } from "shared/lib/classNames/classNames";
-
-import cls from "./NewTodo.module.scss"
-import { useDispatch, useSelector } from "react-redux";
-import { changeImportance, changeTodoText, remove, selectTodoById, toggle, swapTodos } from "features/todosReducer/todosSlice";
-import { Button, Checkbox, Select, Input, ConfigProvider } from "antd";
-// import { ImportanceFilterInitial, importanceInitial, getImportanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
-import { getImportanceInitial } from "entities/importanceFilterInitial/ImportanceFilterInitial";
 import { useState } from "react";
+import { Checkbox, Select } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { classNames } from "shared/lib/classNames/classNames";
+import cls from "./NewTodo.module.scss";
+import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
+
+import {
+  changeImportance,
+  changeTodoText,
+  remove,
+  selectTodoById,
+  toggle,
+} from "features/todosReducer/todosSlice";
+
+import { selectUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+
 import TrashIcon from "shared/assets/icons/TrashIcon.svg";
 
-import CrossIcon from "shared/assets/icons/cross.svg";
-
-
-
-
-import { CSS } from "@dnd-kit/utilities"
-import { useTranslation } from "react-i18next";
-import { useAppDispatch } from "app/hooks/hooks";
-import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 import { request_DeleteTodo } from "./services/request_DeleteTodo";
 import { request_UpdateTodo } from "./services/request_UpdateTodo";
+import { useAppDispatch, useAppSelector } from "shared/lib/store/redux";
+import { importanceFilterInitialValue } from "entities/ImportanceFilterInitValue/ImportanceFilterInitValue";
 
 interface NewTodoProps {
-    className?: string;
-    id: string;
+  className?: string;
+  id: string;
 }
 
-
-
 export const NewTodo = ({ className, id }: NewTodoProps) => {
+  const { t } = useTranslation();
 
-    const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const dispatchAsync = useAppDispatch();
 
+  const authData = useAppSelector(selectUserAuthData);
 
-    const dispatch = useDispatch();
-    const dispatchAsync = useAppDispatch();
+  const todo = useAppSelector((state) => selectTodoById(state, id));
+  const { text, completed, importance } = todo;
 
-    const authData = useSelector(getUserAuthData);
+  // textfield
+  const [textareaValue, setTextareaValue] = useState(text);
+  const handleInputChange = (e: any) => {
+    setTextareaValue(e.target.value);
+  };
 
-    const todo = useSelector(state => selectTodoById(state, id))
-    const { text, completed, importance, description, group } = todo;
+  const [inputEditMode, setInputEditMode] = useState(false);
 
-    // show options on textfield hover
-    // const [mouseIsOver, setMouseIsOver] = useState(false);
+  //dnd todo
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: id,
+    data: {
+      type: "Todo",
+      todo,
+    },
+    disabled: inputEditMode,
+  });
 
-    // textfield
-    const [textareaValue, setTextareaValue] = useState(text);
-    const handleInputChange = (e: any) => {
-        setTextareaValue(e.target.value)
-    }
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
-    const [inputEditMode, setInputEditMode] = useState(false);
+  // тот, который рисуется под перетаскиваемым
+  if (isDragging) {
+    return (
+      <div
+        className={classNames(cls.Todo_dragging, {}, [])}
+        ref={setNodeRef}
+        style={style}
+      ></div>
+    );
+  }
 
-    //dnd todo
-    const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
-        id: id,
-        data: {
-            type: 'Todo',
-            todo,
-        },
-        disabled: inputEditMode,
-    });
+  if (inputEditMode) {
+    return (
+      <div className={classNames(cls.NewTodo_active, {}, [className])}>
+        <textarea
+          value={textareaValue}
+          autoFocus
+          className={classNames(cls.todo_textArea_active, {}, [])}
+          onChange={handleInputChange}
+          onBlur={() => {
+            authData !== "guest"
+              ? dispatchAsync(
+                  request_UpdateTodo({
+                    username: authData.username,
+                    newTodo: { ...todo, text: textareaValue },
+                    todoId: id,
+                  })
+                )
+              : dispatch(changeTodoText({ id, textareaValue })),
+              setInputEditMode(false);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && e.shiftKey) {
+              setInputEditMode(false),
+                authData !== "guest"
+                  ? dispatchAsync(
+                      request_UpdateTodo({
+                        username: authData.username,
+                        newTodo: { ...todo, text: textareaValue },
+                        todoId: id,
+                      })
+                    )
+                  : dispatch(changeTodoText({ id, textareaValue }));
+            }
+          }}
+          placeholder="Что нужно сделать?"
+        ></textarea>
+      </div>
+    );
+  }
 
-    const style = {
-        transition,
-        transform: CSS.Transform.toString(transform),
-    };
-
-    // тот, который рисуется под перетаскиваемым
-    if (isDragging) {
-        return <div
-            className={classNames(cls.Todo_dragging, {}, [])}
-            ref={setNodeRef}
-            style={style}
-
-        >
-
+  if (!inputEditMode) {
+    return (
+      <div
+        //dnd todo
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        id={id}
+        className={classNames(cls.NewTodo, {}, [className])}
+      >
+        <div className={classNames(cls.todo_options, {}, [])}>
+          <Checkbox
+            onChange={() => {
+              authData !== "guest"
+                ? dispatchAsync(
+                    request_UpdateTodo({
+                      username: authData.username,
+                      newTodo: { ...todo, completed: !todo.completed },
+                      todoId: id,
+                    })
+                  )
+                : dispatch(toggle(id));
+            }}
+            checked={completed}
+            className={classNames(cls.checkbox, {}, [])}
+          />
+          <Select
+            className={classNames(cls.select, {}, [])}
+            size="small"
+            options={[
+              ...importanceFilterInitialValue(t),
+              { value: "not chosen", label: t("Не выбран") },
+            ]}
+            style={{ width: 180 }}
+            onChange={(value) => {
+              authData !== "guest"
+                ? dispatchAsync(
+                    request_UpdateTodo({
+                      username: authData.username,
+                      newTodo: { ...todo, importance: String(value) },
+                      todoId: id,
+                    })
+                  )
+                : dispatch(changeImportance({ id, value }));
+            }}
+            value={
+              importance === "not chosen" ? t("Выбери статус") : importance
+            }
+          />
+          <button
+            onClick={() => {
+              authData !== "guest"
+                ? dispatchAsync(
+                    request_DeleteTodo({
+                      username: authData.username,
+                      todoId: id,
+                    })
+                  )
+                : dispatch(remove(id));
+            }}
+            className={classNames(cls.Button_remove_task, {}, [])}
+          >
+            {<TrashIcon className={classNames(cls.remove_icon, {}, [])} />}
+          </button>
         </div>
-    }
-    // сильно сложно и повторяется один и тот же код, меняется лишь несколько css свойств, как лучше переделать?
 
-    if (inputEditMode) {
-        return (
-
-            <div
-                //dnd todo
-                // ref={setNodeRef}
-                // style={style}
-                // {...attributes}
-                // {...listeners}
-                // id={id}
-                className={classNames(cls.NewTodo_active, {}, [className])}
-            // onClick={() => setInputEditMode(true)}
-            // onMouseEnter={() => {
-            //     setMouseIsOver(true);
-            // }}
-            // onMouseLeave={() => {
-            //     setMouseIsOver(false);
-            // }}
-            >
-
-                <textarea
-                    value={textareaValue}
-                    autoFocus
-                    className={classNames(cls.todo_textArea_active, {}, [])}
-                    onChange={handleInputChange}
-                    onBlur={() => {
-                        authData
-                            ? dispatchAsync(request_UpdateTodo({
-                                username: authData.username,
-                                newTodo: { ...todo, text: textareaValue },
-                                todoId: id,
-                            }))
-                            : dispatch(changeTodoText({ id, textareaValue })),
-
-                            setInputEditMode(false)
-                    }
-                    }
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && e.shiftKey) {
-                            setInputEditMode(false),
-                                authData
-                                    ? dispatchAsync(request_UpdateTodo({
-                                        username: authData.username,
-                                        newTodo: { ...todo, text: textareaValue },
-                                        todoId: id,
-                                    }))
-                                    : dispatch(changeTodoText({ id, textareaValue }))
-                            // setMouseIsOver(false)
-                        }
-                    }}
-                    placeholder="Что нужно сделать?"
-
-                >
-
-                </textarea>
-
-            </div>
-
-        )
-    }
-
-    if (!inputEditMode) {
-        return (
-
-            <div
-                //dnd todo
-                ref={setNodeRef}
-                style={style}
-                {...attributes}
-                {...listeners}
-
-                id={id}
-                className={classNames(cls.NewTodo, {}, [className])}
-            >
-                <div className={classNames(cls.todo_options, {}, [])}>
-                    <Checkbox
-                        onChange={() => {
-                            authData
-                            ? dispatchAsync(request_UpdateTodo({
-                                username: authData.username,
-                                newTodo: { ...todo, completed: !todo.completed },
-                                todoId: id
-                            }))
-                            :dispatch(toggle(id))
-                    
-                            // console.log({...todo, completed:completed})
-                        }
-                        }
-                        checked={completed}
-                        className={classNames(cls.checkbox, {}, [])}
-                    />
-                    <Select
-                        className={classNames(cls.select, {}, [])}
-                        size="small"
-                        options={[...getImportanceInitial(t), { value: 'not chosen', label: t('Не выбран') }]}
-                        style={{ width: 180 }}
-                        // placeholder="Выбери статус" // его не видно, приходится добавлять его как value, а это не серый, а черный цвет текста
-                        onChange={(value) => {
-                            authData
-                            ? dispatchAsync(request_UpdateTodo({
-                                username: authData.username,
-                                newTodo: { ...todo, importance: String(value) },
-                                todoId: id,
-                            }))
-                            : dispatch(changeImportance({ id, value }))
-                            
-                            
-                        }
-
-                        }
-                        value={importance === 'not chosen' ? t('Выбери статус') : importance}
-                    />
-                    <button
-                        onClick={() => {
-                            
-                            authData
-                            ? dispatchAsync(request_DeleteTodo({ username: authData.username, todoId: id }))
-                            : dispatch(remove(id))
-
-                        }}
-                        className={classNames(cls.Button_remove_task, {}, [])}
-                    // type="link"
-                    // danger
-                    // size='small'
-                    >
-                        {<TrashIcon className={classNames(cls.remove_icon, {}, [])} />}
-                    </button>
-
-                </div>
-
-                {/* разница в абзаце, вместо инпута, когда неактивный режим */}
-                <p
-                    className={classNames(cls.todo_text, {}, [])}
-                    onClick={() => setInputEditMode(true)}
-                >
-                    {text}
-                </p>
-
-            </div>
-
-        );
-    }
-
-
+        {/* разница в абзаце, вместо инпута, когда неактивный режим */}
+        <p
+          className={classNames(cls.todo_text, {}, [])}
+          onClick={() => setInputEditMode(true)}
+        >
+          {text}
+        </p>
+      </div>
+    );
+  }
 };

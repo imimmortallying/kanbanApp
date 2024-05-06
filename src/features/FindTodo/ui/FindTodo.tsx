@@ -1,43 +1,34 @@
-import { classNames } from "shared/lib/classNames/classNames";
-
-import cls from "./FindTodo.module.scss"
+import cls from "./FindTodo.module.scss";
 import { Input } from "antd";
-import { useState } from "react";
-import { updateFindingString } from "features/findReducer/findSlice";
+import { ComponentProps, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-//! почему компонент находится внутри todosReducer???
+import { classNames } from "shared/lib/classNames/classNames";
+
+import { updateFindingString } from "features/findReducer/findSlice";
 
 interface FindTodoProps {
-    className?: string;
+  className?: string;
 }
 
+export const FindTodo = ({ className }: FindTodoProps) => {
+  const dispatch = useDispatch();
 
-export const FindTodo = ({className}:FindTodoProps) => {
+  const { t } = useTranslation();
 
-    const dispatch = useDispatch();
+  const [findingStr, setFindingStr] = useState("");
+  
+  type InputProps = ComponentProps<"input">["onChange"];
+  const handleInputChange: InputProps = (e) => {
+    setFindingStr(e.target.value);
+    dispatch(updateFindingString(e.target.value));
+  };
 
-    const { t } = useTranslation();
-
-    const [findingStr, setFindingStr] = useState('')
-
-    const handleInputChange = (e: any) => {
-        let newStr = e.target.value //! пляски с мутацией, разобраться в обновлении state!
-        setFindingStr(newStr)
-        dispatch(updateFindingString(newStr)) //! как в этот момент отправить актуальное значение local state?
-        console.log(findingStr)
-    }
-
-    return (
-        <div className={classNames(cls.FindTodo, {}, [className])}>
-            {t('Поиск')}
-            <Input 
-            onChange={handleInputChange}
-            value={findingStr} 
-            >
-
-            </Input>
-        </div>
-    );
+  return (
+    <div className={classNames(cls.FindTodo, {}, [className])}>
+      {t("Поиск")}
+      <Input onChange={handleInputChange} value={findingStr}></Input>
+    </div>
+  );
 };

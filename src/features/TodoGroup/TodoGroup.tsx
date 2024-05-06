@@ -1,177 +1,170 @@
-import { classNames } from "shared/lib/classNames/classNames";
-import { removeTodoGroup, selectFilteredTodoIds, selectFilteredTodos, swapTodos } from "features/todosReducer/todosSlice";
-
-import cls from "./TodoGroup.module.scss"
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import cls from "./TodoGroup.module.scss";
+
+import { classNames } from "shared/lib/classNames/classNames";
+
+import {
+  removeTodoGroup,
+  selectFilteredTodoIds,
+} from "features/todosReducer/todosSlice";
+import {
+  changeGroupName,
+  removeGroup,
+} from "features/groupsReducer/groupsSlice";
 import { NewTodo } from "features/NewTodo/NewTodo";
 import { AddTodo } from "features/AddTodo";
-import { Button, Input } from "antd";
-import { changeGroupName, removeGroup } from "features/groupsReducer/groupsSlice";
-import { useCallback, useMemo, useState } from "react";
-import TrashIcon from "shared/assets/icons/TrashIcon.svg";
-import { createSelector } from "reselect";
 
-import { CSS } from "@dnd-kit/utilities"
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
-import { DndContext, DragEndEvent, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { createPortal } from "react-dom";
-import { useAppDispatch } from "app/hooks/hooks";
-import { getUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
+import TrashIcon from "shared/assets/icons/TrashIcon.svg";
+
 import { request_DeleteGroup } from "./services/request_DeleteGroup";
 import { request_ChangeGroupName } from "./services/request_ChangeGroupName";
-
-
-//icons 
+import { useAppDispatch, useAppSelector } from "shared/lib/store/redux";
+import { selectUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 
 interface TodoGroupProps {
-    className?: string;
-    groupId?: string;
-    groupName?: string;
-    group: any;
+  className?: string;
+  groupId?: string;
+  groupName?: string;
+  group: any;
 }
 
-export const TodoGroup = ({ className, groupId, groupName, group }: TodoGroupProps) => {
-
-    // юзернейм чтобы отправить на сервер
-    const authData = useSelector(getUserAuthData); 
-
-    const dispatch = useDispatch();
-    const dispatchAsync = useAppDispatch();
-
-    const todoIds = useSelector(selectFilteredTodoIds)
-    const todos = useSelector(((state: any) => state.todos))
-    //@ts-ignore
-    const groupeTodoIds = (todoIds, todos) => {
-        return todoIds.filter((todoId: any) => {
-            return todos.find((todo: any) => todo.id === todoId).group === groupId
-        })
-    }
-
-    // const groupedTodoIds = groupeTodoIds(todoIds, todos)
-    const groupedTodoIds = groupeTodoIds(todoIds, todos)
-
-    // console.log('todo ids', groupedTodoIds)
-
-    const [inputText, setInputText] = useState(groupName);
-    const handleInputChange = (e: any) => {
-        setInputText(e.target.value)
-    }
-
-    const [inputEditMode, setInputEditMode] = useState(false)
-
-    // dnd group
-    const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
-        id: groupId,
-        data: {
-            type: 'Group',
-            group,
-        },
-        disabled: inputEditMode
+export const TodoGroup = ({ groupId, groupName, group }: TodoGroupProps) => {
+  
+  const dispatch = useDispatch();
+  const dispatchAsync = useAppDispatch();
+  
+  const authData = useAppSelector(selectUserAuthData);
+  const todoIds = useAppSelector(selectFilteredTodoIds);
+  const todos = useAppSelector((state: any) => state.todos);
+  //@ts-ignore
+  const groupeTodoIds = (todoIds, todos) => {
+    return todoIds.filter((todoId: any) => {
+      return todos.find((todo: any) => todo.id === todoId).group === groupId;
     });
+  };
 
-    const style = {
-        transition,
-        // transform: CSS.Transform.toString(transform)
-    };
+  const groupedTodoIds = groupeTodoIds(todoIds, todos);
 
-    if (isDragging) {
-        return <div
-            className={classNames(cls.TodoGroup_dragging_container, {}, [])}
-            ref={setNodeRef}
-            style={style}
-        />
-    }
-    //dnd todo
+  const [inputText, setInputText] = useState(groupName);
+  const handleInputChange = (e: any) => {
+    setInputText(e.target.value);
+  };
 
+  const [inputEditMode, setInputEditMode] = useState(false);
 
+  // dnd group
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: groupId,
+    data: {
+      type: "Group",
+      group,
+    },
+    disabled: inputEditMode,
+  });
 
+  const style = {
+    transition,
+  };
 
-
-
-
-
+  if (isDragging) {
     return (
-
-        <div
-            className={classNames(cls.TodoGroup_container, {}, [])}
-            ref={setNodeRef}
-            style={style}
-        >
-
-            <div
-                className={classNames(cls.TodoGroup_header, {}, [])}
-                {...attributes}
-                {...listeners}
-            >
-                {/* или див с текстом, или при нажатии на див - инпут для изменения текста */}
-                {!inputEditMode && (<div
-                    className={classNames(cls.input_nonEditMode, {}, [])}
-                    onClick={() => setInputEditMode(true)}>
-                    {inputText}
-                </div>)}
-
-                {inputEditMode && (<input
-                    className={classNames(cls.input_editMode, {}, [])}
-                    value={inputText}
-                    autoFocus
-                    onChange={handleInputChange}
-                    // onClick={()=>setInputEditMode(true)}
-                    onBlur={() => {
-                        authData
-                        ? dispatchAsync(request_ChangeGroupName({username: authData.username, groupId, newName: inputText}))
-                        : dispatch(changeGroupName({ groupId, inputText }))
-                        // dispatch(changeGroupName({ groupId, inputText }))
-                        setInputEditMode(false)
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key !== "Enter") return;
-                        authData
-                        ? dispatchAsync(request_ChangeGroupName({username: authData.username, groupId, newName: inputText}))
-                        : dispatch(changeGroupName({ groupId, inputText }))
-                        // dispatch(changeGroupName({ groupId, inputText }))
-                        setInputEditMode(false);
-                    }}
-
-                />)}
-
-
-                <button
-                    onClick={() => {
-                        //  dispatch(removeGroup(groupId)), 
-                        //  dispatch(removeTodoGroup(groupId)) 
-                        authData 
-                        ? dispatchAsync(request_DeleteGroup({username: authData.username, groupId}))
-                        : dispatch(removeGroup(groupId)) && dispatch(removeTodoGroup(groupId)) 
-                        // dispatch(removeGroup(groupId)) && dispatch(removeTodoGroup(groupId)) 
-                        }}
-                    className={classNames(cls.remove_button, {}, [])}
-                >
-                    {<TrashIcon className={classNames(cls.remove_icon, {}, [])}/>}
-                </button>
-            </div>
-
-            <div
-                className={classNames(cls.TodoGroup_body, {}, [])}
-
-            >
-
-                <SortableContext items={groupedTodoIds}>
-                    {groupedTodoIds.map((id: any) => {
-                        return <NewTodo id={id} key={id} ></NewTodo>
-                    })}
-                </SortableContext>
-
-            </div>
-
-            <div className={classNames(cls.TodoGroup_footer, {}, [])}>
-
-                <AddTodo groupId={groupId}></AddTodo>
-
-            </div>
-
-        </div>
-
-
-
+      <div
+        className={classNames(cls.TodoGroup_dragging_container, {}, [])}
+        ref={setNodeRef}
+        style={style}
+      />
     );
+  }
+
+  return (
+    <div
+      className={classNames(cls.TodoGroup_container, {}, [])}
+      ref={setNodeRef}
+      style={style}
+    >
+      <div
+        className={classNames(cls.TodoGroup_header, {}, [])}
+        {...attributes}
+        {...listeners}
+      >
+        {!inputEditMode && (
+          <div
+            className={classNames(cls.input_nonEditMode, {}, [])}
+            onClick={() => setInputEditMode(true)}
+          >
+            {inputText}
+          </div>
+        )}
+
+        {inputEditMode && (
+          <input
+            className={classNames(cls.input_editMode, {}, [])}
+            value={inputText}
+            autoFocus
+            onChange={handleInputChange}
+            onBlur={() => {
+              authData !== "guest"
+                ? dispatchAsync(
+                    request_ChangeGroupName({
+                      username: authData.username,
+                      groupId,
+                      newName: inputText,
+                    })
+                  )
+                : dispatch(changeGroupName({ groupId, inputText }));
+              setInputEditMode(false);
+            }}
+            onKeyDown={(e) => {
+              if (e.key !== "Enter") return;
+              authData !== "guest"
+                ? dispatchAsync(
+                    request_ChangeGroupName({
+                      username: authData.username,
+                      groupId,
+                      newName: inputText,
+                    })
+                  )
+                : dispatch(changeGroupName({ groupId, inputText }));
+              setInputEditMode(false);
+            }}
+          />
+        )}
+
+        <button
+          onClick={() => {
+            authData !== "guest"
+              ? dispatchAsync(
+                  request_DeleteGroup({ username: authData.username, groupId })
+                )
+              : dispatch(removeGroup(groupId)) &&
+                dispatch(removeTodoGroup(groupId));
+          }}
+          className={classNames(cls.remove_button, {}, [])}
+        >
+          {<TrashIcon className={classNames(cls.remove_icon, {}, [])} />}
+        </button>
+      </div>
+
+      <div className={classNames(cls.TodoGroup_body, {}, [])}>
+        <SortableContext items={groupedTodoIds}>
+          {groupedTodoIds.map((id: any) => {
+            return <NewTodo id={id} key={id}></NewTodo>;
+          })}
+        </SortableContext>
+      </div>
+
+      <div className={classNames(cls.TodoGroup_footer, {}, [])}>
+        <AddTodo groupId={groupId}></AddTodo>
+      </div>
+    </div>
+  );
 };

@@ -5,6 +5,8 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./FilterAccomplishmentBtns.module.scss"
 import { Button } from "antd";
 import { useTranslation } from "react-i18next";
+import { selectAcomplishment } from "../model/selectors";
+import { useAppSelector } from "shared/lib/store/redux";
 
 interface FilterAccomplishmentBtnsProps {
     className?: string;
@@ -15,9 +17,7 @@ export const FilterAccomplishmentBtns = ({ className }: FilterAccomplishmentBtns
 
     const { t } = useTranslation();
 
-    //? как вынести из компонента селектор? и нужно ли
-
-    const acomplishment = useSelector((state: any) => state.visibilityFilter.acomplishment)
+    const acomplishment = useAppSelector(selectAcomplishment)
     return (
         <div className={classNames(cls.FilterAccomplishmentBtns, {}, [className])}>
             <div className={classNames(cls.text, {}, [])}>

@@ -5,3 +5,12 @@
     gap: 20px;
     width: 300px;
 }
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    padding-top: 5px;
+    border-top: 2px solid var(--third-color);
+}

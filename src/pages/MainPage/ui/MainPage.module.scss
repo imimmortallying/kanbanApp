@@ -13,38 +13,12 @@
     // pointer-events: none;
 }
 
-.content_container {
-    // display: flex;
-    // flex-direction: row;
-    // margin: auto;
-    // gap: 4px;
-}
+// .FilterAccomplishmentBtns{
+//     width: 50%;
+// }
 
-.Header {
-    display: grid;
-    grid-template-columns: 0.5fr 0.8fr 0.8fr 0.5fr;
-    // flex-direction: row;
-    width: 100%;
-    justify-items: center;
-    position: absolute;
-    top: 20px;
-    // align-items: end;
-}
-
-.FindTodo{
-    // width: 15%;
-}
-
-.FilterAccomplishmentBtns{
-    width: 50%;
-}
-
-.contextButtons{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.todoGroups{
-    // pointer-events: none;
-}
+// .contextButtons{
+//     display: flex;
+//     flex-direction: column;
+//     gap: 30px;
+// }

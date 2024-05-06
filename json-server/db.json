@@ -137,6 +137,66 @@
             "username": "ф",
             "password": "ф",
             "data": {}
+        },
+        {
+            "username": "admi",
+            "password": "admi",
+            "data": {
+                "groups": [
+                    {
+                        "name": "new group",
+                        "id": "e54c5cd3-3fa8-48d6-a7f8-27d6bd133cac"
+                    },
+                    {
+                        "id": "group1",
+                        "name": "group1"
+                    }
+                ],
+                "todos": [
+                    {
+                        "group": "group1",
+                        "text": "Убраться на столе",
+                        "id": "3",
+                        "completed": true,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "group1",
+                        "id": "7b1c8bf6-bb31-4044-9b8b-a2c83b0e7858",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "group2",
+                        "id": "bd913fed-ecc3-4a7a-9d12-80feeaf9f4d4",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "group2",
+                        "id": "e49de27c-9f87-458d-93dd-f4e54646fafb",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "group3",
+                        "id": "8d7a2bf2-300b-41da-94cb-543abe847334",
+                        "text": "xsdfsdfsdf",
+                        "completed": false,
+                        "importance": "U&I"
+                    },
+                    {
+                        "group": "group1",
+                        "id": "52b36254-ea7d-49d4-af43-4c12cf10ba39",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
+                    }
+                ]
+            }
         }
     ]
 }

@@ -1,3 +1,7 @@
+import { createSelector } from "@reduxjs/toolkit"
+import { RootState } from "app/ReduxStore/store"
 
-
-export const getUserAuthData = (state:any) => state.user.authData
+export const selectUserAuthData = createSelector(
+    (state: RootState) => state,
+    (state) => state.user.authData
+)

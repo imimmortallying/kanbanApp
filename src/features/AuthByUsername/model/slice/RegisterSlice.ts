@@ -1,46 +1,34 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RegisterUser } from "../services/RegisterUser";
 
 export const RegisterSlice = createSlice({
-    name: 'registration',
-    initialState: {},
-    reducers: {
-        sendMessage: (state, action) => {
-            //@ts-ignore
-            state.error = action.payload
-        },
-        removeResponseStatus: (state) => {
-            //@ts-ignore
-        state.status = undefined
-        }
+  name: "registration",
+  initialState: { status: undefined, isLoading: false, error: undefined },
+  reducers: {
+    sendMessage: (state, action) => {
+      state.error = action.payload;
     },
-    extraReducers: (builder) => {
-        builder
-            .addCase(RegisterUser.pending, (state) => {
-                //@ts-ignore
-                state.status = undefined;
-                //@ts-ignore
-                state.isLoading = true;
-                //@ts-ignore
-
-            })
-            .addCase(RegisterUser.fulfilled, (state, action) => {
-                //@ts-ignore
-                state.isLoading = false;
-                //@ts-ignore
-                state.status = action.payload
-            })
-            .addCase(RegisterUser.rejected, (state, action) => {
-                //@ts-ignore
-                state.isLoading = false;
-                //@ts-ignore
-                state.status = action.payload;
-                //@ts-ignore
-            });
+    removeResponseStatus: (state) => {
+      state.status = undefined;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(RegisterUser.pending, (state) => {
+        state.status = undefined;
+        state.isLoading = true;
+      })
+      .addCase(RegisterUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.status = action.payload;
+      })
+      .addCase(RegisterUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.status = action.payload;
+      });
+  },
+});
 
-})
-
-export default RegisterSlice.reducer
+export default RegisterSlice.reducer;
 
 export const { actions: registrationActions } = RegisterSlice;
