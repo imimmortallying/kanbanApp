@@ -6,18 +6,18 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 120px;
-    min-height: 120px;
-    padding: 0.625rem;
+    height: 15rem;
+    min-height: 15rem;
+    padding: 0.8rem;
     padding-bottom: 1.25rem;
     align-items: center;
     text-align: left;
     border-radius: 0.75rem;
     position: relative;
     background-color: var(--primary-color);
-    border: 1px black solid;
+    border: .1rem black solid;
     max-width: 100%;
-    border: var(--primary-color) 3px solid;
+    border: var(--primary-color) .3rem solid;
     cursor: grab;
 }
 
@@ -27,39 +27,22 @@
 }
 
 .Task:hover{
-    border:var(--third-color) 3px solid;
-}
-
-
-
-.checkbox{
-    position: absolute;
-    left: 10px;
-    bottom: 5px;
-    // align-self: flex-start;
-}
-
-.select{
-    position: absolute;
-    bottom: 5px;
-    left: 80px;
+    border:var(--third-color) .3rem solid;
 }
 
 .select:focus{
     border: red;
 }
 
-
 .placeholder {
     box-sizing: border-box;
     background-color: #edf2f7;
-    border: 2px dashed #cbd5e0;
-    // margin-bottom: 1rem;
+    border: .2rem dashed #cbd5e0;
 }
 
 .Todo_dragging{
     @extend .Task;
-    border: var(--third-color) 3px solid;
+    border: var(--third-color) .3rem solid;
     opacity: 50%;
     z-index: 100;
 }
@@ -69,13 +52,12 @@
     width: 100%;
     height: 80%;
     overflow-y: auto;
-    line-height: 1.1rem; //! настроить глобально?
+    line-height: 1.6rem;
 }
 
 .Button_remove_task{
     position: absolute;
-    bottom: 3px;
+    bottom: .5rem;
     right: 0;
-    // height: 20px;
     fill: red;
 }

@@ -1,21 +1,14 @@
-.Button_remove_task{
-    // position: absolute;
-    // bottom: 6px;
-    // right: 0;
-    
+.Button_remove_task {
     background-color: var(--primary-color);
-    border:none;
+    border: none;
 }
 
-.remove_icon{
-    height: 25px;
-    // fill: red;
+.remove_icon {
     opacity: 50%;
-    vertical-align: bottom; 
+    vertical-align: bottom;
     cursor: pointer;
 }
 
-.remove_icon:hover{
+.remove_icon:hover {
     opacity: 100%;
-
 }
