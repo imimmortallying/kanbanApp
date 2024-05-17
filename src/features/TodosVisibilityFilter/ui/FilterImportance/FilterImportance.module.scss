@@ -1,0 +1,11 @@
+.FilterImportance{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.importance__elem{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

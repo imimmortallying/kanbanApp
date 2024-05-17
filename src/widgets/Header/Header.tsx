@@ -1,7 +1,5 @@
 import cls from "./Header.module.scss";
 import { FindTodo } from "features/FindTodo";
-import { FilterAccomplishmentBtns } from "features/FilterAcomplishmentBtns";
-import { FilterImportance } from "features/FilterImportance";
 import { ThemeSwitcher } from "widgets/ThemeSwitcher";
 import { LangSwitcher } from "widgets/LangSwitcher/LangSwitcher";
 import { useCallback, useState } from "react";
@@ -9,6 +7,8 @@ import { selectUserAuthData } from "entities/User/model/selectors/getUserAuthDat
 import { LoginModal } from "features/AuthByUsername";
 import { LoginButton } from "features/LoginButton/LoginButton";
 import { useAppSelector } from "shared/lib/store/redux";
+import { FilterAccomplishmentBtns } from "features/TodosVisibilityFilter/ui/FilterAccomplishmentBtns/FilterAccomplishmentBtns";
+import { FilterImportance } from "features/TodosVisibilityFilter/ui/FilterImportance/FilterImportance";
 
 interface HeaderProps {}
 

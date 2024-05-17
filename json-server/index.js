@@ -12,7 +12,7 @@ server.use(jsonServer.bodyParser);
 // Нужно для небольшой задержки, чтобы запрос проходил не мгновенно, имитация реального апи
 server.use(async (req, res, next) => {
     await new Promise((res) => {
-        setTimeout(res, 800);
+        setTimeout(res, 100);
     });
     next();
 });
@@ -141,14 +141,14 @@ server.post('/deleteGroup', (req, res) => {
             })
 
         // удаление туду удаленной группы
-       db.users.find((user) => {
-            return user.username === username
-        }).data.todos
-        .forEach((todo, i, arr) => {
-            if (todo.group === groupId) {
-                arr.splice(i, 1)
+        const removingTodos = db.users.find((user) => user.username === username).data.todos
+        console.log(removingTodos)
+        for (let i = removingTodos.length - 1; i >= 0; i--) {
+            if (removingTodos[i].group === groupId) {
+                removingTodos.splice(i, 1);
             }
-        })
+        }
+
 
         fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(db, null, 4));
 
@@ -324,7 +324,7 @@ server.post('/swapTodos', (req, res) => {
         const { username, todos } = req.body;
         const db = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'db.json'), 'UTF-8'));
 
-
+        console.log(todos)
         db.users.find((user) => {
             return user.username === username
         })

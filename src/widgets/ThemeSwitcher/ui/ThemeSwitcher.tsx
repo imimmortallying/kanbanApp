@@ -1,11 +1,11 @@
 import { classNames } from "shared/lib/classNames/classNames";
 
 import cls from "./ThemeSwitcher.module.scss";
-import { useTheme } from "app/providers/ThemeProvider/useTheme";
 
 import Sun from "shared/assets/icons/sun.svg";
 import Moon from "shared/assets/icons/moon.svg";
-import { Theme } from "app/providers/ThemeProvider/ThemeContext";
+import { useTheme } from "shared/lib/ThemeProvider/useTheme";
+import { Theme } from "shared/lib/ThemeProvider/ThemeContext";
 
 interface ThemeSwitcherProps {
   className?: string;

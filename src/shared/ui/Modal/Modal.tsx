@@ -3,16 +3,15 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Modal.module.scss"
 import React, { ReactNode, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { Portal } from "../Portal/Portal";
-import { useTheme } from "app/providers/ThemeProvider/useTheme";
-import { useSelector } from "react-redux";
 import { selectUserAuthData } from "entities/User/model/selectors/getUserAuthData/getUserAuthData";
 import { useAppSelector } from "shared/lib/store/redux";
+import { useTheme } from "shared/lib/ThemeProvider/useTheme";
 
 interface ModalProps {
     className?: string;
     children?: ReactNode;
-    isOpened?: boolean; // почему я должен получат это пропсом?
-    onClose?: () => void; // закрывает окно. Почему я должен получать это пропсом?
+    isOpened?: boolean;
+    onClose?: () => void;
     lazy?: boolean;
 }
 

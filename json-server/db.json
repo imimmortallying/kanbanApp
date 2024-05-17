@@ -1,199 +1,44 @@
 {
     "users": [
         {
-            "username": "user228",
-            "password": "123",
-            "data": {
-                "todos": [
-                    {
-                        "group": "f985287e-7fde-453c-8b41-134052331a1f",
-                        "text": "Убраться на столе",
-                        "id": "2",
-                        "completed": "false",
-                        "importance": "not chosen",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group1",
-                        "id": "7b3c08d6-08b1-4c9e-bbae-708f42cd9436",
-                        "text": "Поссать",
-                        "completed": false,
-                        "importance": "not chosen"
-                    },
-                    {
-                        "group": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
-                        "text": "Сходить в магазин поссать возле урны по дороге по не навалить в штаны покурить сижку стрельнуть метчь но не застрелиться как птица синица нельзя идти домой без хлеба или доходяги съедят да блять когда там этот текст сдвинется или не сдвинется вопросы и ответы надо сделать текст больше",
-                        "id": "1",
-                        "completed": "false",
-                        "importance": "U&I",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
-                        "id": "1778b997-a1bb-4992-8744-3cccabd0b21f",
-                        "text": "",
-                        "completed": false,
-                        "importance": "not chosen"
-                    }
-                ],
-                "groups": [
-                    {
-                        "id": "45adc04f-28c3-4fa5-85bb-76dd3063349c",
-                        "name": "new group"
-                    },
-                    {
-                        "name": "После обеда",
-                        "id": "f985287e-7fde-453c-8b41-134052331a1f"
-                    },
-                    {
-                        "id": "9cb2ac28-0d89-48a8-b84a-045b53295711",
-                        "name": "new group"
-                    }
-                ]
-            }
-        },
-        {
-            "username": "admin",
-            "password": "420",
-            "data": {
-                "todos": [
-                    {
-                        "group": "group2",
-                        "text": "Не забыть принять таблетки",
-                        "id": "3",
-                        "completed": "false",
-                        "importance": "U&I",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group1",
-                        "text": "Заехать партейку в доту",
-                        "id": "2",
-                        "completed": false,
-                        "importance": "!U&I",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    },
-                    {
-                        "group": "group2",
-                        "text": "Чифирнуть бы ништяк да голяк",
-                        "id": "1",
-                        "completed": true,
-                        "importance": "!U&I",
-                        "description": "Сходить нужно до прихода родителей домой"
-                    }
-                ],
-                "groups": [
-                    {
-                        "name": "new group",
-                        "id": "3e340d39-715d-496a-8355-ab10bf6b600c"
-                    },
-                    {
-                        "name": "group1",
-                        "id": "group1"
-                    },
-                    {
-                        "name": "group2",
-                        "id": "group2"
-                    }
-                ]
-            }
-        },
-        {
-            "username": "j",
-            "password": "j",
-            "data": {}
-        },
-        {
-            "username": "k",
-            "password": "k",
-            "data": {}
-        },
-        {
-            "username": "q",
-            "password": "g",
-            "data": {}
-        },
-        {
-            "username": "zzz",
-            "password": "z",
-            "data": {}
-        },
-        {
-            "username": "za",
-            "password": "z",
-            "data": {}
-        },
-        {
-            "username": "z",
-            "password": "zz",
-            "data": {}
-        },
-        {
-            "username": "aa",
+            "username": "a",
             "password": "a",
-            "data": {}
-        },
-        {
-            "username": "ф",
-            "password": "ф",
-            "data": {}
-        },
-        {
-            "username": "admi",
-            "password": "admi",
             "data": {
-                "groups": [
-                    {
-                        "name": "new group",
-                        "id": "e54c5cd3-3fa8-48d6-a7f8-27d6bd133cac"
-                    },
-                    {
-                        "id": "group1",
-                        "name": "group1"
-                    }
-                ],
                 "todos": [
                     {
-                        "group": "group1",
-                        "text": "Убраться на столе",
-                        "id": "3",
+                        "group": "46d16fea-76a7-485f-9f0b-a72c0dec539e",
+                        "id": "8a275683-07d9-40b2-b4b2-010177097c7d",
+                        "text": "5",
+                        "completed": false,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "46d16fea-76a7-485f-9f0b-a72c0dec539e",
+                        "id": "887ad3f5-ff14-4834-92c1-8cd377974ea0",
+                        "text": "",
                         "completed": true,
                         "importance": "not chosen"
                     },
                     {
-                        "group": "group1",
-                        "id": "7b1c8bf6-bb31-4044-9b8b-a2c83b0e7858",
+                        "group": "55b83372-a32d-4660-9de3-288ed192d1c1",
+                        "id": "0ee53d38-097f-4db4-97c8-856fa739b6c6",
                         "text": "",
-                        "completed": false,
-                        "importance": "not chosen"
-                    },
-                    {
-                        "group": "group2",
-                        "id": "bd913fed-ecc3-4a7a-9d12-80feeaf9f4d4",
-                        "text": "",
-                        "completed": false,
-                        "importance": "not chosen"
-                    },
-                    {
-                        "group": "group2",
-                        "id": "e49de27c-9f87-458d-93dd-f4e54646fafb",
-                        "text": "",
-                        "completed": false,
-                        "importance": "not chosen"
-                    },
-                    {
-                        "group": "group3",
-                        "id": "8d7a2bf2-300b-41da-94cb-543abe847334",
-                        "text": "xsdfsdfsdf",
                         "completed": false,
                         "importance": "U&I"
+                    }
+                ],
+                "groups": [
+                    {
+                        "name": "2d23232",
+                        "id": "46d16fea-76a7-485f-9f0b-a72c0dec539e"
                     },
                     {
-                        "group": "group1",
-                        "id": "52b36254-ea7d-49d4-af43-4c12cf10ba39",
-                        "text": "",
-                        "completed": false,
-                        "importance": "not chosen"
+                        "id": "55b83372-a32d-4660-9de3-288ed192d1c1",
+                        "name": "new group"
+                    },
+                    {
+                        "id": "130c8292-f1b4-4873-8616-9a0066908d2b",
+                        "name": "new group"
                     }
                 ]
             }

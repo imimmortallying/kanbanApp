@@ -1,0 +1,16 @@
+.todo_textArea_active{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 80%;
+    resize: none;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--font-color);
+    cursor: text;
+    line-height: 1.1rem;
+}
+
+.todo_textArea_active:focus{
+    outline: none;
+}

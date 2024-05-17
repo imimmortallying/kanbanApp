@@ -9,6 +9,7 @@ export const userSlice = createSlice({
       state.authData = action.payload;
     },
     initAuthData: (state) => {
+      console.log('initAuthData')
       const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
       state.authData = user ? JSON.parse(user) : "guest";
     },

@@ -3,7 +3,7 @@ import { MainPage } from "pages/MainPage";
 import { Route, Routes } from "react-router-dom";
 import { classNames } from "shared/lib/classNames/classNames";
 import { Suspense } from "react";
-import { useTheme } from "./providers/ThemeProvider/useTheme";
+import { useTheme } from "shared/lib/ThemeProvider/useTheme";
 
 const App = () => {
   const { theme } = useTheme();

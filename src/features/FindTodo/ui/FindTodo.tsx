@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { classNames } from "shared/lib/classNames/classNames";
+import { updateFindingString } from "../model/findSlice";
 
-import { updateFindingString } from "features/findReducer/findSlice";
 
 interface FindTodoProps {
   className?: string;

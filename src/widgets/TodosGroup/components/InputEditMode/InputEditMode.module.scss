@@ -1,0 +1,13 @@
+.input_editMode{
+    background-color: var(--primary-color);
+    color: var(--inverted-bg-color);
+    outline: none;
+    border: none;
+    padding-left: 0.1rem;
+    margin-left: 1rem;
+}
+
+.input_editMode:focus{
+    outline: 2px solid var(--third-color);
+    border-radius: 0.25rem;
+}
