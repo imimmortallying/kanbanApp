@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginByUsername } from "../services/loginByUsername";
+import { ILogin } from "./types";
+
+const initialState: ILogin = { status: undefined, isLoading: false };
 
 export const loginSlice = createSlice({
   name: "login",
-  initialState: { status: undefined, isLoading: false },
+  initialState: initialState,
   reducers: {
     removeResponseStatus: (state) => {
       state.status = undefined;

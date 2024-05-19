@@ -10,6 +10,6 @@ export type IUserAuthData = {
   password: string;
   data: IUserData;
 };
-export interface IUser {
+export type IUser = {
   authData: IUserAuthData | "guest";
 }

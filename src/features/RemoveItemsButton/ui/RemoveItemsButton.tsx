@@ -2,12 +2,15 @@ import cls from "./RemoveItemsButton.module.scss";
 import { useAppDispatch } from "shared/lib/store/redux";
 import TrashIcon from "shared/assets/icons/TrashIcon.svg";
 import { classNames } from "shared/lib/classNames/classNames";
+import { IUser } from "entities/User/model/slice/types";
 
+type ReduxAction = { payload: string; type: string };
+type LocalAction = ReduxAction | ReduxAction[];
 interface RemoveItemsButtonProps {
-  authData: any;
-  localAction: any;
-  asyncAction: any;
-  className?: any;
+  authData: IUser["authData"];
+  asyncAction: (...args: any) => void;
+  localAction: LocalAction;
+  className?: string;
 }
 
 export const RemoveItemsButton = ({
@@ -18,7 +21,7 @@ export const RemoveItemsButton = ({
 }: RemoveItemsButtonProps) => {
   const dispatch = useAppDispatch();
 
-  function dispatchArrOfFunctions(functions: any) {
+  function dispatchArrOfFunctions(functions: LocalAction) {
     if (Array.isArray(functions)) {
       for (let func of functions) {
         dispatch(func);

@@ -1,14 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { IUserAuthData } from "entities/User/model/slice/types";
 
-interface RegisterUser {
-  username: string;
-  password: string;
+interface IRegisterUser {
+  username: IUserAuthData["username"];
+  password: IUserAuthData["password"];
 }
 
 export const RegisterUser = createAsyncThunk<
   Number,
-  RegisterUser,
+  IRegisterUser,
   { rejectValue: string }
 >("Registration/RegisterUser", async (authData, thunkAPI) => {
   try {

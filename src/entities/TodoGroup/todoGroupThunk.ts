@@ -6,16 +6,18 @@ import {
   removeGroupFromResponse,
 } from "./todoGroupSlice";
 import { removeTodoGroup } from "entities/Todo/model/todosSlice";
+import { IGroup } from "./types";
+import { IUserAuthData } from "entities/User/model/slice/types";
 
-interface changeGroupNameRequest {
-  username: string;
-  groupId: string;
-  newName: string;
+interface IChangeGroupNameRequest {
+  username: IUserAuthData["username"];
+  groupId: IGroup["id"];
+  newName: IGroup["name"];
 }
 
 export const changeGroupNameRequest = createAsyncThunk<
   Number,
-  changeGroupNameRequest,
+  IChangeGroupNameRequest,
   { rejectValue: string }
 >("changeGroupNameRequest", async (authData, thunkAPI) => {
   try {
@@ -36,14 +38,14 @@ export const changeGroupNameRequest = createAsyncThunk<
   }
 });
 
-interface deleteGroupRequest {
-  username: string;
-  groupId: string;
+interface IDeleteGroupRequest {
+  username: IUserAuthData["username"];
+  groupId: IGroup["id"];
 }
 
 export const deleteGroupRequest = createAsyncThunk<
   Number,
-  deleteGroupRequest,
+  IDeleteGroupRequest,
   { rejectValue: string }
 >("deleteGroupRequest", async (authData, thunkAPI) => {
   try {
@@ -65,13 +67,13 @@ export const deleteGroupRequest = createAsyncThunk<
   }
 });
 
-interface addNewGroupRequest {
-  username: string;
+interface IAddNewGroupRequest {
+  username: IUserAuthData["username"];
 }
 
 export const addNewGroupRequest = createAsyncThunk<
   Number,
-  addNewGroupRequest,
+  IAddNewGroupRequest,
   { rejectValue: string }
 >("addNewGroupRequest", async (authData, thunkAPI) => {
   try {
@@ -92,14 +94,14 @@ export const addNewGroupRequest = createAsyncThunk<
   }
 });
 
-interface swapGroupsRequest {
-  username: string;
-  groups: any[];
+interface ISwapGroupsRequest {
+  username: IUserAuthData["username"];
+  groups: IGroup[];
 }
 
 export const swapGroupsRequest = createAsyncThunk<
   Number,
-  swapGroupsRequest,
+  ISwapGroupsRequest,
   { rejectValue: string }
 >("swapGroupsRequest", async (authData, thunkAPI) => {
   try {
@@ -111,9 +113,7 @@ export const swapGroupsRequest = createAsyncThunk<
     if (!response.data) {
       throw new Error();
     }
-
     // thunkAPI.dispatch(swapGroupsFromResponse(response.data));
-
     return response.status;
   } catch (e) {
     return thunkAPI.rejectWithValue(e.response.status);

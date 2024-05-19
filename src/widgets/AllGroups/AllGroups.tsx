@@ -5,10 +5,11 @@ import { useAppDispatch } from "shared/lib/store/redux";
 import { useTranslation } from "react-i18next";
 import { addNewGroupRequest } from "entities/TodoGroup/todoGroupThunk";
 import { addGroup } from "entities/TodoGroup/todoGroupSlice";
+import { IUser } from "entities/User/model/slice/types";
 
 interface AlGroupsProps {
   children?: React.ReactNode;
-  authData: any;
+  authData: IUser['authData'];
 }
 
 export const AllGroups = ({ children, authData }: AlGroupsProps) => {

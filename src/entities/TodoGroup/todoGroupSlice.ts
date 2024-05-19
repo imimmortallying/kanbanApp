@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IGroup } from "./types";
 
 const initialLocalState: IGroup[] = [
@@ -13,27 +13,36 @@ export const groupsSlice = createSlice({
   name: "groups",
   initialState: initialState,
   reducers: {
-    changeGroupNameFromResponse: (state, action) => {
+    changeGroupNameFromResponse: (
+      state,
+      action: PayloadAction<{
+        groupId: IGroup["id"];
+        currentGroupName: IGroup["id"];
+      }>
+    ) => {
       state.forEach((i) => {
         if (i.id === action.payload.groupId) {
           i.name = action.payload.currentGroupName;
         }
       });
     },
-    swapGroupsFromResponse: (state, action) => {
+    swapGroupsFromResponse: (state, action: PayloadAction<IGroup[]>) => {
       if (state != action.payload) {
         return (state = action.payload);
       }
       return;
     },
-    removeGroupFromResponse: (state, action) => {
+    removeGroupFromResponse: (state, action: PayloadAction<IGroup["id"]>) => {
       state.map((i, index) => {
         if (i.id === action.payload) {
           state.splice(index, 1);
         }
       });
     },
-    addGroupFromResponse: (state, action) => {
+    addGroupFromResponse: (
+      state,
+      action: PayloadAction<{ name: IGroup["name"]; id: IGroup["id"] }>
+    ) => {
       state.push({ name: action.payload.name, id: action.payload.id });
     },
     clearGroupsState: (state) => {
@@ -42,27 +51,39 @@ export const groupsSlice = createSlice({
     defaultGroupsState: (state) => {
       return (state = initialLocalState);
     },
-    initGroupsState: (state, action) => {
+    initGroupsState: (state, action: PayloadAction<IGroup[]>) => {
       return (state = action.payload);
     },
-    addGroup: (state, action) => {
+    addGroup: (state, action: PayloadAction<IGroup["id"]>) => {
       state.push({ name: "new group", id: action.payload });
     },
-    removeGroup: (state, action) => {
+    removeGroup: (state, action: PayloadAction<IGroup["id"]>) => {
       state.map((i, index) => {
         if (i.id === action.payload) {
           state.splice(index, 1);
         }
       });
     },
-    changeGroupName: (state, action) => {
+    changeGroupName: (
+      state,
+      action: PayloadAction<{
+        groupId: IGroup["id"];
+        inputValue: IGroup["name"];
+      }>
+    ) => {
       state.forEach((i) => {
         if (i.id === action.payload.groupId) {
-          i.name = action.payload.inputText;
+          i.name = action.payload.inputValue;
         }
       });
     },
-    swapGroups: (state, action) => {
+    swapGroups: (
+      state,
+      action: PayloadAction<{
+        overGroupId: IGroup["id"];
+        activeGroupId: IGroup["id"];
+      }>
+    ) => {
       const ibItem = state.find((i) => i.id === action.payload.overGroupId);
       const iaItem = state.find((i) => i.id === action.payload.activeGroupId);
 

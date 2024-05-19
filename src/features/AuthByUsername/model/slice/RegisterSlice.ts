@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RegisterUser } from "../services/RegisterUser";
+import { IRegistration } from "./types";
+
+const initialState: IRegistration = {
+  status: undefined,
+  isLoading: false,
+  error: undefined,
+};
 
 export const RegisterSlice = createSlice({
   name: "registration",
-  initialState: { status: undefined, isLoading: false, error: undefined },
+  initialState: initialState,
   reducers: {
-    sendMessage: (state, action) => {
-      state.error = action.payload;
-    },
     removeResponseStatus: (state) => {
       state.status = undefined;
     },

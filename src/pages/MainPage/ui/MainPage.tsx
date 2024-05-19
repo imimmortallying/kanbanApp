@@ -62,12 +62,10 @@ export const MainPage: FC<MainPageProps> = () => {
   const groupedAndFiltredTodos = useAppSelector(selectGroupedAndFiltredTodos);
 
   useEffect(() => {
-    console.log("first effect");
     dispatch(userActions.initAuthData());
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("second effect");
     if (authData) {
       if (authData === "guest") {
         dispatch(defaultGroupsState());
@@ -83,28 +81,18 @@ export const MainPage: FC<MainPageProps> = () => {
     }
   }, [authData]);
 
-  //refactoring
-  // создал новый компонент - widgets/TasksGroup взамен TodoGroup, чтобы переписать его заново, избавившись от лишней
-  // ответственности и связности
-  //DND
-  //1 оберунть в dnd context
-  //2 добавить sortable context, обернуть им то, что будем таскать, передать items в виде id (groupsIds)
   const groupsIds = useAppSelector(selectGroupsIds);
-
-  //3 сделать колонку dragable. внутри группы useSortable hook. Добавить style
-  // style обязательно, или не будут двигаться колонки
-  // spread ... attribytes listeners туда, за что будем хвататься, чтобы тащить
-
-  //4 dragoverlay. В main page добавить ф-ии onDragStart и т.д
-  // Добавить const [activeGroup, setActiveGroup] = useState(null); чтобы определить, что именно тащим
-
-  const [activeGroup, setActiveGroup] = useState(null);
-  const [activeTodo, setActiveTodo] = useState(null);
-
-  // добавил группу, чтобы работали onDragEnd
   const groups = useAppSelector(selectGroups);
   const todos = useAppSelector(selectTodos);
-
+  
+  // DND настройки
+  //1) Для избежания связности виджетов Todo, TodosGroup и AllGroups используется передача компонентов через children prop
+  // компоненты, которые будут перетаскиваться, оборачиваются в SortableContext
+  // также внутри этих перетаскиваемых компонентов (Todo, TodosGroup) есть DND настройки
+  //2) createPortal внизу компонента отрисовывает перетаскиваемый компонент
+  //3) ф-ии и насйтроки DND, передаваемые в DndContext:
+  const [activeTodo, setActiveTodo] = useState(null);
+  const [activeGroup, setActiveGroup] = useState(null);
   function onDragStart(event: DragStartEvent) {
     if (event.active.data.current?.type === "Group") {
       setActiveGroup(event.active.data.current.group);
@@ -188,9 +176,6 @@ export const MainPage: FC<MainPageProps> = () => {
       },
     })
   );
-
-  //5 в mainPage добавить dragOverlay, чтобы компонент оставался на месте, а тащимый рисовался через портал
-  // чтоюы отрисовать внутри перетаскиваемой группы тудушки пришлось также через чилдрен передать туду айди
 
   return (
     <ConfigProvider

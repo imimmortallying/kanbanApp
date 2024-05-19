@@ -11,10 +11,12 @@ import { ToggleTodoCompletion } from "./Components/ToggleTodoCompletion/ui/Toggl
 import { SelectTodoImportance } from "./Components/SelectTodoImportance/ui/SelectTodoImportance";
 import { RemoveItemsButton } from "features/RemoveItemsButton/ui/RemoveItemsButton";
 import { selectTodoById } from "entities/Todo/model/selectors";
+import { IUser } from "entities/User/model/slice/types";
+import { ITodo } from "entities/Todo/model/types";
 
 interface TodoProps {
-  authData?: any;
-  id: string;
+  authData?: IUser["authData"];
+  id: ITodo['id'];
 }
 
 export const Todo = ({ id, authData }: TodoProps) => {
@@ -97,7 +99,10 @@ export const Todo = ({ id, authData }: TodoProps) => {
             className={cls.Button_remove_task}
             authData={authData}
             asyncAction={deleteTodoRequest({
-              username: authData?.username,
+              username:
+                authData && typeof authData !== "string"
+                  ? authData.username
+                  : undefined,
               todoId: id,
             })}
             localAction={remove(id)}

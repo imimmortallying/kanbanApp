@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IVisibilityFilter } from "./types";
+import { ImportanceFilterValues } from "entities/ImportanceFilterInitValue/types";
 
 const initialState: IVisibilityFilter = {
   accomplishment: "all",
@@ -19,7 +20,7 @@ export const visibilityFilterSlice = createSlice({
     showOpened: (state) => {
       state.accomplishment = "opened";
     },
-    toggleFilter: (state, action) => {
+    toggleFilter: (state, action: PayloadAction<ImportanceFilterValues>) => {
       if (state.importance.includes(action.payload)) {
         state.importance.forEach((i, index) => {
           if (i === action.payload) {

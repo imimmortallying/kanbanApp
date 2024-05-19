@@ -1,7 +1,5 @@
 import { classNames } from "shared/lib/classNames/classNames";
-
 import cls from "./ThemeSwitcher.module.scss";
-
 import Sun from "shared/assets/icons/sun.svg";
 import Moon from "shared/assets/icons/moon.svg";
 import { useTheme } from "shared/lib/ThemeProvider/useTheme";

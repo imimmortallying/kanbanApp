@@ -2,17 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { initTodosState } from "entities/Todo/model/todosSlice";
 import { initGroupsState } from "entities/TodoGroup/todoGroupSlice";
+import { IUserAuthData } from "entities/User/model/slice/types";
 import { userActions } from "entities/User/model/slice/userSlice";
 import { USER_LOCALSTORAGE_KEY } from "shared/const/localstorage";
 
-interface LoginByUsernameProps {
-  username: string;
-  password: string;
+interface ILoginByUsernameProps {
+  username: IUserAuthData["username"];
+  password: IUserAuthData["password"];
 }
 
 export const loginByUsername = createAsyncThunk<
   Number,
-  LoginByUsernameProps,
+  ILoginByUsernameProps,
   { rejectValue: string }
 >("login/loginByUsername", async (authData, thunkAPI) => {
   try {

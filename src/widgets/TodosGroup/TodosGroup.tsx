@@ -8,12 +8,14 @@ import { CSS } from "@dnd-kit/utilities";
 import { removeTodoGroup } from "entities/Todo/model/todosSlice";
 import { InputEditMode } from "./components/InputEditMode/InputEditMode";
 import { RemoveItemsButton } from "features/RemoveItemsButton/ui/RemoveItemsButton";
+import { IGroup } from "entities/TodoGroup/types";
+import { IUser } from "entities/User/model/slice/types";
 
 interface TodosGroupProps {
   className?: string;
-  groupId?: string;
-  groupName?: string;
-  authData?: any;
+  groupId?: IGroup["id"];
+  groupName?: IGroup["name"];
+  authData?: IUser["authData"];
   children?: React.ReactNode;
 }
 
@@ -26,7 +28,7 @@ export const TodosGroup = ({
 }: TodosGroupProps) => {
   const [inputEditMode, setInputEditMode] = useState(false);
   const [inputText, setInputText] = useState(groupName);
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
 
@@ -89,7 +91,10 @@ export const TodosGroup = ({
           className={cls.remove_button}
           authData={authData}
           asyncAction={deleteGroupRequest({
-            username: authData?.username,
+            username:
+              authData && typeof authData !== "string"
+                ? authData.username
+                : undefined,
             groupId,
           })}
           localAction={[removeGroup(groupId), removeTodoGroup(groupId)]}

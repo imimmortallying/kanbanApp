@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { USER_LOCALSTORAGE_KEY } from "shared/const/localstorage";
-import { IUser } from "./types";
+import { IUser, IUserAuthData } from "./types";
 
 const initialState: IUser = { authData: undefined };
 
@@ -8,7 +8,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    setAuthData: (state, action) => {
+    setAuthData: (state, action:PayloadAction<IUserAuthData>) => {
       state.authData = action.payload;
     },
     initAuthData: (state) => {

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IFindingString } from "./types";
 
 const initialState: IFindingString = "";
@@ -7,7 +7,8 @@ export const findingStringSlice = createSlice({
   name: "findingString",
   initialState: initialState,
   reducers: {
-    updateFindingString: (state, action) => (state = action.payload),
+    updateFindingString: (state, action: PayloadAction<IFindingString>) =>
+      (state = action.payload),
   },
 });
 
