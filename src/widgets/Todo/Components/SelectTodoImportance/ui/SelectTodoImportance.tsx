@@ -1,10 +1,11 @@
-import { Checkbox, Select } from "antd";
+import { Select } from "antd";
 import cls from "./SelectTodoImportance.module.scss";
 import { useAppDispatch } from "shared/lib/store/redux";
 import { updateTodoRequest } from "entities/Todo/model/todoThunk";
-import { changeImportance, toggle } from "entities/Todo/model/todosSlice";
+import { changeImportance } from "entities/Todo/model/todosSlice";
 import { importanceFilterInitialValue } from "entities/ImportanceFilterInitValue/ImportanceFilterInitValue";
 import { useTranslation } from "react-i18next";
+import { ImportanceFilterValues } from "entities/ImportanceFilterInitValue/types";
 
 interface SelectTodoImportanceProps {
   authData: any;
@@ -31,16 +32,16 @@ export const SelectTodoImportance = ({
         { value: "not chosen", label: t("Не выбран") },
       ]}
       style={{ width: 180 }}
-      onChange={(value) => {
-        authData !== "guest"
-          ? dispatch(
+      onChange={(value: ImportanceFilterValues) => {
+        authData === "guest"
+          ? dispatch(changeImportance({ id, value }))
+          : dispatch(
               updateTodoRequest({
                 username: authData.username,
-                newTodo: { ...todo, importance: String(value) },
+                newTodo: { ...todo, importance: value },
                 todoId: id,
               })
-            )
-          : dispatch(changeImportance({ id, value }));
+            );
       }}
       value={importance === "not chosen" ? t("Выбери статус") : importance}
     />

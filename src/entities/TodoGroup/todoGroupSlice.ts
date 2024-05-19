@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IGroup } from "./types";
 
-const initialState = [
+const initialLocalState: IGroup[] = [
   { id: "group1", name: "group1" },
   { id: "group2", name: "group2" },
   { id: "group3", name: "group3" },
 ];
 
+const initialState: IGroup[] = [];
+
 export const groupsSlice = createSlice({
   name: "groups",
-  initialState: [],
+  initialState: initialState,
   reducers: {
     changeGroupNameFromResponse: (state, action) => {
       state.forEach((i) => {
@@ -18,7 +21,6 @@ export const groupsSlice = createSlice({
       });
     },
     swapGroupsFromResponse: (state, action) => {
-      console.log('swap slice')
       if (state != action.payload) {
         return (state = action.payload);
       }
@@ -38,14 +40,11 @@ export const groupsSlice = createSlice({
       return (state = []);
     },
     defaultGroupsState: (state) => {
-      console.log("defaultGroupsState");
-      return (state = initialState);
+      return (state = initialLocalState);
     },
     initGroupsState: (state, action) => {
-      console.log("initGroupsState");
       return (state = action.payload);
     },
-    // выше - работа с сервером
     addGroup: (state, action) => {
       state.push({ name: "new group", id: action.payload });
     },

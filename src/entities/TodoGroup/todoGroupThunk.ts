@@ -4,7 +4,6 @@ import {
   addGroupFromResponse,
   changeGroupNameFromResponse,
   removeGroupFromResponse,
-  swapGroupsFromResponse,
 } from "./todoGroupSlice";
 import { removeTodoGroup } from "entities/Todo/model/todosSlice";
 

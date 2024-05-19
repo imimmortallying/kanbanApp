@@ -2,11 +2,10 @@ import { RootState } from "app/ReduxStore/store";
 import { createSelector } from "reselect";
 
 export const selectGroups = createSelector(
-    (state: RootState) => state,
-    (state) => state.groups
-)
+  (state: RootState) => state,
+  (state) => state.groups
+);
 
-export const selectGroupsIds = createSelector(
-    selectGroups,
-    groupsIds => groupsIds.map((todo:any) => todo.id)
-  )
+export const selectGroupsIds = createSelector(selectGroups, (groupsIds) =>
+  groupsIds.map(group => group.id)
+);

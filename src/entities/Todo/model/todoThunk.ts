@@ -1,16 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { addTodoFromResponse, initTodosState, remove, updateTodo} from "./todosSlice";
+import {
+  addTodoFromResponse,
+  initTodosState,
+  remove,
+  updateTodo,
+} from "./todosSlice";
 import { initGroupsState } from "entities/TodoGroup/todoGroupSlice";
+import { IGroup } from "entities/TodoGroup/types";
+import { IUserAuthData } from "entities/User/model/slice/types";
+import { ITodo, IUpdateTodoRequest } from "./types";
 
-interface addNewTodoRequest {
-  username: string;
-  groupId: string;
+interface IAddNewTodoRequest {
+  username: IUserAuthData["username"];
+  groupId: IGroup["id"];
 }
 
 export const addNewTodoRequest = createAsyncThunk<
   Number,
-  addNewTodoRequest,
+  IAddNewTodoRequest,
   { rejectValue: string }
 >("addNewTodoRequest", async (authData, thunkAPI) => {
   try {
@@ -30,15 +38,11 @@ export const addNewTodoRequest = createAsyncThunk<
   }
 });
 
-interface updateTodoRequest {
-  username: string;
-  newTodo: any;
-  todoId: string;
-}
+
 
 export const updateTodoRequest = createAsyncThunk<
   Number,
-  updateTodoRequest,
+  IUpdateTodoRequest,
   { rejectValue: string }
 >("updateTodoRequest", async (authData, thunkAPI) => {
   try {
@@ -46,7 +50,7 @@ export const updateTodoRequest = createAsyncThunk<
       "http://localhost:8000/updateTodo",
       authData
     );
-    
+
     if (!response.data) {
       throw new Error();
     }
@@ -59,79 +63,84 @@ export const updateTodoRequest = createAsyncThunk<
   }
 });
 
-interface deleteTodoRequest {
-    username: string;
-    todoId: string;
+interface IDeleteTodoRequest {
+  username: IUserAuthData["username"];
+  todoId: ITodo["id"];
 }
 
-export const deleteTodoRequest = createAsyncThunk <Number, deleteTodoRequest, { rejectValue: string }>(
-    'deleteTodoRequest',
-    async (authData, thunkAPI) => {
-        try {
-            const response = await axios.post('http://localhost:8000/deleteTodo', authData);
-            
-            if (!response.data) {
-                throw new Error();
-            }
+export const deleteTodoRequest = createAsyncThunk<
+  Number,
+  IDeleteTodoRequest,
+  { rejectValue: string }
+>("deleteTodoRequest", async (authData, thunkAPI) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/deleteTodo",
+      authData
+    );
 
-            thunkAPI.dispatch(remove(response.data))
-            
-            return response.status
-        } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.status);
-        }
-
+    if (!response.data) {
+      throw new Error();
     }
-)
 
-interface swapTodosRequest {
-  username: string;
-  todos: any[];
+    thunkAPI.dispatch(remove(response.data));
+
+    return response.status;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response.status);
+  }
+});
+
+interface ISwapTodosRequest {
+  username: IUserAuthData["username"];
+  todos: ITodo[];
 }
 
-export const swapTodosRequest = createAsyncThunk <Number, swapTodosRequest, { rejectValue: string }>(
-  'swapTodosRequest',
-  async (authData, thunkAPI) => {
-      console.log('swapTodosRequest')
-      try {
-          const response = await axios.post('http://localhost:8000/swapTodos', authData);
-          
-          if (!response.data) {
-              throw new Error();
-          }
-          
-          // thunkAPI.dispatch(swapTodosResponse(response.data))
-          
-          return response.status
-      } catch (e) {
-          return thunkAPI.rejectWithValue(e.response.status);
-      }
-
+export const swapTodosRequest = createAsyncThunk<
+  Number,
+  ISwapTodosRequest,
+  { rejectValue: string }
+>("swapTodosRequest", async (authData, thunkAPI) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/swapTodos",
+      authData
+    );
+    if (!response.data) {
+      throw new Error();
+    }
+    // thunkAPI.dispatch(swapTodosResponse(response.data))
+    return response.status;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response.status);
   }
-)
+});
 
 interface LoginByUsernameProps {
-  username: string;
-  password: string;
+  username: IUserAuthData["username"];
+  password: IUserAuthData["password"];
 }
 
-export const InitReduxByToken = createAsyncThunk <Number, LoginByUsernameProps, { rejectValue: string }>(
-  'InitReduxByToken',
-  async (authData, thunkAPI) => {
-      try {
-          const response = await axios.post('http://localhost:8000/userTodos', authData);
+export const InitReduxByToken = createAsyncThunk<
+  Number,
+  LoginByUsernameProps,
+  { rejectValue: string }
+>("InitReduxByToken", async (authData, thunkAPI) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/userTodos",
+      authData
+    );
 
-          if (!response.data) {
-              throw new Error();
-          }
+    if (!response.data) {
+      throw new Error();
+    }
 
-          thunkAPI.dispatch(initGroupsState(response.data.data.groups))
-          thunkAPI.dispatch(initTodosState(response.data.data.todos))
+    thunkAPI.dispatch(initGroupsState(response.data.data.groups));
+    thunkAPI.dispatch(initTodosState(response.data.data.todos));
 
-          return response.status
-      } catch (e) {
-          return thunkAPI.rejectWithValue(e.response.status)
-      }
-
+    return response.status;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.response.status);
   }
-)
+});

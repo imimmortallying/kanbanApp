@@ -27,7 +27,7 @@ export const AddTodo = ({ groupId }: AddTodoProps) => {
           ? dispatch(
               addNewTodoRequest({ username: authData.username, groupId })
             )
-          : dispatch(add({ group: groupId, id: crypto.randomUUID() }));
+          : dispatch(add({ groupId: groupId, newTodoId: crypto.randomUUID() }));
       }}
     >
       <AddIcon className={classNames(cls.AddIcon, {}, [])}></AddIcon>

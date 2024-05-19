@@ -4,13 +4,13 @@ import cls from "./Todo.module.scss";
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { useAppSelector } from "shared/lib/store/redux";
-import { selectTodoById } from "entities/Todo/model/selectors";
 import { deleteTodoRequest } from "entities/Todo/model/todoThunk";
 import { remove } from "entities/Todo/model/todosSlice";
 import { TodoTextareaEditMode } from "./Components/ChangeTodoText/ui/TodoTextareaEditMode";
 import { ToggleTodoCompletion } from "./Components/ToggleTodoCompletion/ui/ToggleTodoCompletion";
 import { SelectTodoImportance } from "./Components/SelectTodoImportance/ui/SelectTodoImportance";
 import { RemoveItemsButton } from "features/RemoveItemsButton/ui/RemoveItemsButton";
+import { selectTodoById } from "entities/Todo/model/selectors";
 
 interface TodoProps {
   authData?: any;

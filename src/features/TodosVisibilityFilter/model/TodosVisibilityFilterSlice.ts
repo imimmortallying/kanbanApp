@@ -1,20 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IVisibilityFilter } from "./types";
+
+const initialState: IVisibilityFilter = {
+  accomplishment: "all",
+  importance: [],
+};
 
 export const visibilityFilterSlice = createSlice({
   name: "visibilityFilter",
-  initialState: {
-    acomplishment: "all",
-    importance: [],
-  },
+  initialState: initialState,
   reducers: {
     showAll: (state) => {
-      state.acomplishment = "all";
+      state.accomplishment = "all";
     },
     showClosed: (state) => {
-      state.acomplishment = "closed";
+      state.accomplishment = "closed";
     },
     showOpened: (state) => {
-      state.acomplishment = "opened";
+      state.accomplishment = "opened";
     },
     toggleFilter: (state, action) => {
       if (state.importance.includes(action.payload)) {

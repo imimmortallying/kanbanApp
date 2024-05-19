@@ -13,10 +13,6 @@ import { userActions } from "entities/User/model/slice/userSlice";
 import { Header } from "widgets/Header/Header";
 import { useAppDispatch, useAppSelector } from "shared/lib/store/redux";
 import { TodosGroup } from "widgets/TodosGroup/TodosGroup";
-import {
-  selectGroupedAndFiltredTodos,
-  selectTodos,
-} from "entities/Todo/model/selectors";
 import { AllGroups } from "widgets/AllGroups/AllGroups";
 
 import { SortableContext } from "@dnd-kit/sortable";
@@ -50,6 +46,7 @@ import {
 import { swapGroupsRequest } from "entities/TodoGroup/todoGroupThunk";
 import { useTheme } from "shared/lib/ThemeProvider/useTheme";
 import { Todo } from "widgets/Todo/Todo";
+import { selectGroupedAndFiltredTodos, selectTodos } from "entities/Todo/model/selectors";
 
 interface MainPageProps {
   className?: string;
@@ -139,16 +136,17 @@ export const MainPage: FC<MainPageProps> = () => {
   }
 
   function onDragOver(event: DragOverEvent) {
+
     const { active, over } = event;
     if (!over) return;
 
-    const activeId = active.id;
-    const overId = over.id;
+    const activeId = String(active.id);
+    const overId = String(over.id);
 
     if (activeId === overId) return;
 
-    const activeGroupId = active.id;
-    const overGroupId = over.id;
+    const activeGroupId = activeId;
+    const overGroupId = overId;
 
     if (event.active.data.current?.type === "Group") {
       dispatch(swapGroups({ activeGroupId, overGroupId }));
@@ -178,7 +176,7 @@ export const MainPage: FC<MainPageProps> = () => {
 
     if (isActiveATask && isOverAColumn) {
       dispatch(
-        changeDraggingTodoGroup({ activeId: activeId, newGroup: over.id })
+        changeDraggingTodoGroup({ activeId: activeId, newGroup: overId })
       );
     }
   }
@@ -215,7 +213,7 @@ export const MainPage: FC<MainPageProps> = () => {
         >
           <AllGroups authData={authData}>
             <SortableContext items={groupsIds}>
-              {groupedAndFiltredTodos.map((group: any) => {
+              {groupedAndFiltredTodos.map(group => {
                 return (
                   <TodosGroup
                     authData={authData}
@@ -224,7 +222,7 @@ export const MainPage: FC<MainPageProps> = () => {
                     key={group.groupId}
                   >
                     <SortableContext items={group.todos}>
-                      {group.todos.map((todoId: any) => (
+                      {group.todos.map(todoId => (
                         <Todo
                           id={todoId}
                           key={todoId}
@@ -248,7 +246,7 @@ export const MainPage: FC<MainPageProps> = () => {
                   >
                     {groupedAndFiltredTodos
                       .find((group) => group.groupId === activeGroup.groupId)
-                      .todos?.map((todoId: any) => (
+                      .todos?.map(todoId => (
                         <Todo id={todoId} key={todoId}></Todo>
                       ))}
                   </TodosGroup>

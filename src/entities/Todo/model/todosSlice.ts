@@ -1,19 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ITodo, IUpdateTodoRequest } from "./types";
+import { IGroup } from "entities/TodoGroup/types";
+import { ImportanceFilterValues } from "entities/ImportanceFilterInitValue/types";
 
-interface Todo {
-  id: string;
-  text: string;
-  completed: boolean;
-}
-
-interface Action {
-  type?: string;
-  id?: string;
-  text?: string;
-  filter?: string;
-}
-
-const initialState = [
+const initialLocalState: ITodo[] = [
   {
     group: "group1",
     text: "Существуют две основные трактовки понятия «текст»: имманентная (расширенная, философски нагруженная) и репрезентативная (более частная). Имманентный подход подразумевает отношение к тексту как к автономной реальности, нацеленность на выявление его внутренней структуры.",
@@ -58,78 +48,84 @@ const initialState = [
   },
 ];
 
+const initialState: ITodo[] = [];
+
 export const todosSlice = createSlice({
   name: "todos",
-  initialState: [],
+  initialState: initialState,
   reducers: {
-    updateTodo: (state, action) => {
+    updateTodo: (state, action: PayloadAction<IUpdateTodoRequest>) => {
       return state.map((i) => {
-           if (i.id === action.payload.todoId) {
-               return action.payload.newTodo
-           }
-           return i
-       })
-   },
-    addTodoFromResponse: (state, action) => {
+        if (i.id === action.payload.todoId) {
+          return action.payload.newTodo;
+        }
+        return i;
+      });
+    },
+    addTodoFromResponse: (state, action: PayloadAction<ITodo>) => {
       state.push(action.payload);
     },
-    clearTodosState: (state) => {
-      return (state = []);
-    },
     defaultTodosState: (state) => {
-      console.log("defaultTodosState");
-      return (state = initialState);
+      return (state = initialLocalState);
     },
-    initTodosState: (state, action) => {
-      console.log("initTodosState");
+    initTodosState: (state, action: PayloadAction<ITodo[]>) => {
       return (state = action.payload);
     },
-    // выше - работа с сервером
-    add: (state, action) => {
+    add: (
+      state,
+      action: PayloadAction<{ groupId: IGroup["id"]; newTodoId: ITodo["id"] }>
+    ) => {
       state.push({
-        group: action.payload.group,
-        id: action.payload.id,
+        group: action.payload.groupId,
+        id: action.payload.newTodoId,
         text: "",
         completed: false,
         importance: "not chosen",
-        description: "",
       });
     },
-    toggle: (state, action) => {
+    toggle: (state, action: PayloadAction<ITodo["id"]>) => {
       state.forEach((i) => {
         if (i.id === action.payload) {
           i.completed = !i.completed;
         }
       });
     },
-    remove: (state, action) => {
+    remove: (state, action: PayloadAction<ITodo["id"]>) => {
       state.forEach((i, index) => {
         if (i.id === action.payload) {
           state.splice(index, 1);
         }
       });
     },
-    changeImportance: (state, action) => {
-      console.log('change')
+    changeImportance: (
+      state,
+      action: PayloadAction<{ id: ITodo["id"]; value: ImportanceFilterValues }>
+    ) => {
       state.forEach((i) => {
         if (i.id === action.payload.id) {
           i.importance = action.payload.value;
         }
       });
     },
-    changeTodoText: (state, action) => {
+    changeTodoText: (
+      state,
+      action: PayloadAction<{ id: ITodo["id"]; textareaValue: ITodo["text"] }>
+    ) => {
       state.forEach((i) => {
         if (i.id === action.payload.id) {
           i.text = action.payload.textareaValue;
         }
       });
     },
-    removeTodoGroup: (state, action) => {
+    removeTodoGroup: (state, action: PayloadAction<IGroup["id"]>) => {
       return state.filter((i) => {
         return i.group !== action.payload;
       });
     },
-    swapTodos: (state, action) => {
+    swapTodos: (
+      state,
+      action: PayloadAction<{ ia: ITodo["id"]; ib: ITodo["id"] }>
+    ) => {
       const ibItem = state.find((i) => i.id === action.payload.ib);
       const iaItem = state.find((i) => i.id === action.payload.ia);
 
@@ -144,7 +140,10 @@ export const todosSlice = createSlice({
       });
       return newState;
     },
-    changeDraggingTodoGroup(state, action) {
+    changeDraggingTodoGroup(
+      state,
+      action: PayloadAction<{ activeId: IGroup["id"]; newGroup: IGroup["id"] }>
+    ) {
       state.forEach((i) => {
         if (i.id === action.payload.activeId) {
           i.group = action.payload.newGroup;
@@ -156,7 +155,6 @@ export const todosSlice = createSlice({
 
 export default todosSlice.reducer;
 export const {
-  clearTodosState,
   add,
   toggle,
   remove,
@@ -168,5 +166,5 @@ export const {
   initTodosState,
   addTodoFromResponse,
   defaultTodosState,
-  updateTodo
+  updateTodo,
 } = todosSlice.actions;

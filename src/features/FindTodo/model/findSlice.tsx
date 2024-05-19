@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+import { IFindingString } from "./types";
+
+const initialState: IFindingString = "";
 
 export const findingStringSlice = createSlice({
-    name: 'findingString',
-    initialState: '',
-    reducers: {
-        updateFindingString:  (state, action) => state = action.payload
-    }
-})
+  name: "findingString",
+  initialState: initialState,
+  reducers: {
+    updateFindingString: (state, action) => (state = action.payload),
+  },
+});
 
-export default findingStringSlice.reducer
-export const { updateFindingString } = findingStringSlice.actions
+export default findingStringSlice.reducer;
+export const { updateFindingString } = findingStringSlice.actions;

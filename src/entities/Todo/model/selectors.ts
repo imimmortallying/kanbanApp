@@ -1,70 +1,71 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "app/ReduxStore/store";
+import { IFindingString } from "features/FindTodo/model/types";
+import { IVisibilityFilter } from "features/TodosVisibilityFilter/model/types";
+import { GroupedAndFiltredTodos, ITodo } from "./types";
 
-export const selectTodos = (state:RootState) => state.todos;
+export const selectTodos = (state: RootState) => state.todos;
 
-export const selectTodoById = (state:RootState, todoId:any) => {
-  return state.todos.find((todo:any) => todo.id === todoId)
-}
+export const selectTodoById = (state: RootState, todoId: ITodo["id"]) => {
+  return state.todos.find((todo: ITodo) => todo.id === todoId);
+};
 
 export const selectFilteredTodos = createSelector(
-    state => state.todos,
-    state => state.visibilityFilter.acomplishment,
-    state => state.visibilityFilter.importance,
+  (state) => state.todos,
+  (state) => state.visibilityFilter.accomplishment,
+  (state) => state.visibilityFilter.importance,
 
-    (todos:[], acomplishment, importance:[]) => {
-        if (acomplishment === 'all' && importance.length === 0) {
-            return todos
-        }
-        
-        const completedStatus = acomplishment === 'closed' // вернет тру или фолс, т.е отфильтрует и оставит только туду с тру или с фолс
-        // @ts-ignore
-        // return todos.filter(todo => todo.completed === completedStatus) // это проверка совпадения состояния todo и сост. фильтра
-        return todos.filter(todo => {
-            // @ts-ignore
-            
-            const statusMatches = acomplishment === 'all' || todo.completed === completedStatus
-            // @ts-ignore
-
-            const importanceMatches = importance.length === 0 || importance.includes(todo.importance)
-            console.log(statusMatches && importanceMatches)
-            return statusMatches && importanceMatches
-          })
+  (
+    todos: ITodo[],
+    accomplishment: IVisibilityFilter["accomplishment"],
+    importance: IVisibilityFilter["importance"]
+  ) => {
+    if (accomplishment === "all" && importance.length === 0) {
+      return todos;
     }
-   
-)
+    const completedStatus = accomplishment === "closed";
+    return todos.filter((todo) => {
+      const statusMatches =
+        accomplishment === "all" || todo.completed === completedStatus;
+      const importanceMatches =
+        importance.length === 0 || importance.includes(todo.importance);
+      return statusMatches && importanceMatches;
+    });
+  }
+);
 
 export const selectFindedTodos = createSelector(
-    state => state.findingString,
-    selectFilteredTodos,
-    // @ts-ignore
-    (findingString, selectFilteredTodos) => selectFilteredTodos.filter((item:any) => {
-        // return item.text.split(' ').find((str:any)=>str.includes('')) // нужно также предусммотреть не только совпадение в 1 слове, но и совпадение со всей цельной строкой
-        return item.text.includes(findingString)
+  (state) => state.findingString,
+  selectFilteredTodos,
+  (findingString: IFindingString, selectFilteredTodos: ITodo[]) =>
+    selectFilteredTodos.filter((item) => {
+      return item.text.includes(findingString);
     })
-)
+);
 
 export const selectFindedAndFilteredTodoIds = createSelector(
-    selectFindedTodos,
-    filteredTodos => filteredTodos.map((todo:any) => todo.id)
-  )
+  selectFindedTodos,
+  (filteredTodos) => filteredTodos.map((todo: ITodo) => todo.id)
+);
 
 export const selectGroupedAndFiltredTodos = createSelector(
   (state: RootState) => state,
   selectFindedTodos,
   (state, selectFindedTodos) => {
-
-    let groupedTodos: { [key: string]: any } = {};
+    let groupedTodos: GroupedAndFiltredTodos = {};
     for (let group of state.groups) {
       if (groupedTodos[group.id] === undefined)
-        groupedTodos[group.id] = { groupId: group.id, groupName: group.name, todos: [] };
+        groupedTodos[group.id] = {
+          groupId: group.id,
+          groupName: group.name,
+          todos: [],
+        };
     }
 
     for (let todo of selectFindedTodos) {
-        groupedTodos[todo.group]?.todos.push(todo.id);
+      groupedTodos[todo.group]?.todos.push(todo.id);
     }
     //объект в массив
-    return Object.values(groupedTodos)
-
+    return Object.values(groupedTodos);
   }
 );
