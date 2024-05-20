@@ -65,8 +65,8 @@ export const todosSlice = createSlice({
     addTodoFromResponse: (state, action: PayloadAction<ITodo>) => {
       state.push(action.payload);
     },
-    defaultTodosState: (state) => {
-      return (state = initialLocalState);
+    defaultTodosState: () => {
+      return initialLocalState;
     },
     initTodosState: (state, action: PayloadAction<ITodo[]>) => {
       return (state = action.payload);
@@ -129,7 +129,7 @@ export const todosSlice = createSlice({
       const ibItem = state.find((i) => i.id === action.payload.ib);
       const iaItem = state.find((i) => i.id === action.payload.ia);
 
-      let newState = state.map((i) => {
+      const newState = state.map((i) => {
         if (i.id === action.payload.ia) {
           return ibItem;
         }

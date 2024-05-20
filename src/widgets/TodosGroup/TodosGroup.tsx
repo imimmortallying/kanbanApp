@@ -20,7 +20,6 @@ interface TodosGroupProps {
 }
 
 export const TodosGroup = ({
-  className,
   groupId,
   groupName,
   authData,

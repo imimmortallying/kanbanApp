@@ -1,19 +1,15 @@
-import i18n from 'i18next';
-import Backend from 'i18next-http-backend';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
-
-  // .use(Backend) // вообще, задают переводы в этом файле. У меня их тут нет, потому что они подтягиваются из public/locales, 
-  // это позволит потом добавить асинхронную подрузку переводов, когда будет несколько страниц
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     debug: __IS_DEV__,
-    fallbackLng: 'en',
+    fallbackLng: "en",
     interpolation: {
-      escapeValue: false, // not needed for react as it escapes by default
+      escapeValue: false,
     },
     resources: {
       en: {
@@ -23,9 +19,9 @@ i18n
           "Перевести": "Translate",
           "Добавить задачу": "Add task",
           "Поиск": "Find a task",
-          "Все":"All",
-          "Текущие":"Current",
-          "Выполненные":"Done",
+          "Все": "All",
+          "Текущие": "Current",
+          "Выполненные": "Done",
           "Фильтрация задач по выполнению": "Filtering tasks by completion",
           "Фильтрация задач по важности": "Filtering tasks by importance",
           "Важно и срочно": "important and urgent",
@@ -45,8 +41,8 @@ i18n
           "Пользователь уже зарегистрирован": "User is already registered",
           "Выбери статус": "select status",
           "Пароли не совпадают": "Passwords don't match",
-          "Заполните поля": "Fill in the blanks"
-        }
+          "Заполните поля": "Fill in the blanks",
+        },
       },
       ru: {
         translation: {
@@ -78,10 +74,9 @@ i18n
           "Выбери статус": "выбери статус",
           "Пароли не совпадают": "Пароли не совпадают",
           "Заполните поля": "Заполните поля",
-        }
-      }
-    }
-
+        },
+      },
+    },
   });
 
 export default i18n;

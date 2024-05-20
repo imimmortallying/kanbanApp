@@ -16,7 +16,7 @@ interface IChangeGroupNameRequest {
 }
 
 export const changeGroupNameRequest = createAsyncThunk<
-  Number,
+  number,
   IChangeGroupNameRequest,
   { rejectValue: string }
 >("changeGroupNameRequest", async (authData, thunkAPI) => {
@@ -44,7 +44,7 @@ interface IDeleteGroupRequest {
 }
 
 export const deleteGroupRequest = createAsyncThunk<
-  Number,
+  number,
   IDeleteGroupRequest,
   { rejectValue: string }
 >("deleteGroupRequest", async (authData, thunkAPI) => {
@@ -72,7 +72,7 @@ interface IAddNewGroupRequest {
 }
 
 export const addNewGroupRequest = createAsyncThunk<
-  Number,
+  number,
   IAddNewGroupRequest,
   { rejectValue: string }
 >("addNewGroupRequest", async (authData, thunkAPI) => {
@@ -100,7 +100,7 @@ interface ISwapGroupsRequest {
 }
 
 export const swapGroupsRequest = createAsyncThunk<
-  Number,
+  number,
   ISwapGroupsRequest,
   { rejectValue: string }
 >("swapGroupsRequest", async (authData, thunkAPI) => {

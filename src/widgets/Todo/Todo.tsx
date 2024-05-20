@@ -26,7 +26,7 @@ export const Todo = ({ id, authData }: TodoProps) => {
 
   const [inputEditMode, setInputEditMode] = useState(false);
 
-  //настройка DND
+  //настройка DND 
   const {
     setNodeRef,
     attributes,

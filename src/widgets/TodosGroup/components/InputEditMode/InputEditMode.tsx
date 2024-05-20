@@ -1,28 +1,27 @@
-import { classNames } from "shared/lib/classNames/classNames";
-
 import cls from "./InputEditMode.module.scss";
 import { useAppDispatch } from "shared/lib/store/redux";
 import { changeGroupName } from "entities/TodoGroup/todoGroupSlice";
 import { changeGroupNameRequest } from "entities/TodoGroup/todoGroupThunk";
+import { IGroup } from "entities/TodoGroup/types";
+import { IUser } from "entities/User/model/slice/types";
 
 interface InputEditModeProps {
   className?: string;
-  inputValue: string;
-  onChangeHandler: any;
-  authData: any;
-  inputEditModeSetter: any;
+  inputValue: IGroup["name"];
+  onChangeHandler: (...arg:unknown[]) => void;
+  authData: IUser["authData"];
+  inputEditModeSetter: (arg: boolean) => void;
   groupId: string;
 }
 
 export const InputEditMode = ({
-  className,
   authData,
   inputEditModeSetter,
   inputValue,
   groupId,
   onChangeHandler,
 }: InputEditModeProps) => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   return (
     <input
       className={cls.input_editMode}
@@ -39,7 +38,7 @@ export const InputEditMode = ({
                 newName: inputValue,
               })
             );
-            inputEditModeSetter(false);
+        inputEditModeSetter(false);
       }}
       onKeyDown={(e) => {
         if (e.key !== "Enter") return;
@@ -52,7 +51,7 @@ export const InputEditMode = ({
                 newName: inputValue,
               })
             );
-            inputEditModeSetter(false);
+        inputEditModeSetter(false);
       }}
     />
   );

@@ -7,22 +7,43 @@
                 "todos": [
                     {
                         "group": "130c8292-f1b4-4873-8616-9a0066908d2b",
-                        "id": "3a0c1179-76c1-4f01-be6f-a21b5609b042",
-                        "text": "3",
+                        "id": "19378e6b-1121-4810-8a11-2f776e4c156b",
+                        "text": "1",
                         "completed": false,
-                        "importance": "U&I"
+                        "importance": "not chosen"
                     },
                     {
-                        "group": "55b83372-a32d-4660-9de3-288ed192d1c1",
+                        "group": "59b5efd1-7e2b-4994-bd4b-4854d3ec1167",
                         "id": "78bf2ba3-a8dc-4baf-adc3-76c8c5fad2ea",
                         "text": "2",
                         "completed": false,
                         "importance": "not chosen"
                     },
                     {
-                        "group": "55b83372-a32d-4660-9de3-288ed192d1c1",
-                        "id": "19378e6b-1121-4810-8a11-2f776e4c156b",
-                        "text": "1",
+                        "group": "59b5efd1-7e2b-4994-bd4b-4854d3ec1167",
+                        "id": "3a0c1179-76c1-4f01-be6f-a21b5609b042",
+                        "text": "3",
+                        "completed": false,
+                        "importance": "U&I"
+                    },
+                    {
+                        "group": "db669308-2e65-44d8-a3ca-e976745e9870",
+                        "id": "82a75ca5-868f-4770-9ec7-52ab9c184c6d",
+                        "text": "5",
+                        "completed": true,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "db669308-2e65-44d8-a3ca-e976745e9870",
+                        "id": "bc184022-363c-4a54-839a-e4caabc1d058",
+                        "text": "",
+                        "completed": false,
+                        "importance": "not chosen"
+                    },
+                    {
+                        "group": "db669308-2e65-44d8-a3ca-e976745e9870",
+                        "id": "23beb6b3-aa30-43f6-8386-4a37423fe766",
+                        "text": "",
                         "completed": false,
                         "importance": "not chosen"
                     }
@@ -30,14 +51,14 @@
                 "groups": [
                     {
                         "id": "130c8292-f1b4-4873-8616-9a0066908d2b",
-                        "name": "new group"
+                        "name": "1"
                     },
                     {
-                        "id": "55b83372-a32d-4660-9de3-288ed192d1c1",
-                        "name": "new group"
+                        "name": "2",
+                        "id": "59b5efd1-7e2b-4994-bd4b-4854d3ec1167"
                     },
                     {
-                        "name": "new group",
+                        "name": "3",
                         "id": "db669308-2e65-44d8-a3ca-e976745e9870"
                     }
                 ]

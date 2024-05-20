@@ -1,10 +1,10 @@
 export type ILogin = {
-  status: Number | string;
+  status: number | string;
   isLoading: boolean;
 };
 
 export interface IRegistration {
-  status: Number | string;
+  status: number | string;
   isLoading: boolean;
   error: string;
 }

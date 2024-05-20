@@ -45,11 +45,11 @@ export const groupsSlice = createSlice({
     ) => {
       state.push({ name: action.payload.name, id: action.payload.id });
     },
-    clearGroupsState: (state) => {
-      return (state = []);
+    clearGroupsState: () => {
+      return [];
     },
-    defaultGroupsState: (state) => {
-      return (state = initialLocalState);
+    defaultGroupsState: () => {
+      return initialLocalState;
     },
     initGroupsState: (state, action: PayloadAction<IGroup[]>) => {
       return (state = action.payload);
@@ -87,7 +87,7 @@ export const groupsSlice = createSlice({
       const ibItem = state.find((i) => i.id === action.payload.overGroupId);
       const iaItem = state.find((i) => i.id === action.payload.activeGroupId);
 
-      let newState = state.map((i) => {
+      const newState = state.map((i) => {
         if (i.id === action.payload.activeGroupId) {
           return ibItem;
         }

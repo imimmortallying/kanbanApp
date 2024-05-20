@@ -10,8 +10,6 @@ import { useAppSelector } from "shared/lib/store/redux";
 import { FilterAccomplishmentBtns } from "features/TodosVisibilityFilter/ui/FilterAccomplishmentBtns/FilterAccomplishmentBtns";
 import { FilterImportance } from "features/TodosVisibilityFilter/ui/FilterImportance/FilterImportance";
 
-interface HeaderProps {}
-
 export const Header = () => {
   const [isAuthOpened, setIsAuthOpened] = useState(false);
 

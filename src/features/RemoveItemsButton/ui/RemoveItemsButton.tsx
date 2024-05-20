@@ -8,7 +8,7 @@ type ReduxAction = { payload: string; type: string };
 type LocalAction = ReduxAction | ReduxAction[];
 interface RemoveItemsButtonProps {
   authData: IUser["authData"];
-  asyncAction: (...args: any) => void;
+  asyncAction: (...args: unknown[]) => void;
   localAction: LocalAction;
   className?: string;
 }
@@ -23,7 +23,7 @@ export const RemoveItemsButton = ({
 
   function dispatchArrOfFunctions(functions: LocalAction) {
     if (Array.isArray(functions)) {
-      for (let func of functions) {
+      for (const func of functions) {
         dispatch(func);
       }
     } else dispatch(functions);

@@ -6,12 +6,14 @@ import { changeImportance } from "entities/Todo/model/todosSlice";
 import { importanceFilterInitialValue } from "entities/ImportanceFilterInitValue/ImportanceFilterInitValue";
 import { useTranslation } from "react-i18next";
 import { ImportanceFilterValues } from "entities/ImportanceFilterInitValue/types";
+import { IUser } from "entities/User/model/slice/types";
+import { ITodo } from "entities/Todo/model/types";
 
 interface SelectTodoImportanceProps {
-  authData: any;
-  id: string;
-  todo: any;
-  importance: string;
+  authData: IUser["authData"];
+  id: ITodo["id"];
+  todo: ITodo;
+  importance: ITodo["importance"];
 }
 
 export const SelectTodoImportance = ({

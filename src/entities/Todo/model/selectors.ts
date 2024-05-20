@@ -52,8 +52,8 @@ export const selectGroupedAndFiltredTodos = createSelector(
   (state: RootState) => state,
   selectFindedTodos,
   (state, selectFindedTodos) => {
-    let groupedTodos: GroupedAndFiltredTodos = {};
-    for (let group of state.groups) {
+    const groupedTodos: GroupedAndFiltredTodos = {};
+    for (const group of state.groups) {
       if (groupedTodos[group.id] === undefined)
         groupedTodos[group.id] = {
           groupId: group.id,
@@ -62,7 +62,7 @@ export const selectGroupedAndFiltredTodos = createSelector(
         };
     }
 
-    for (let todo of selectFindedTodos) {
+    for (const todo of selectFindedTodos) {
       groupedTodos[todo.group]?.todos.push(todo.id);
     }
     //объект в массив

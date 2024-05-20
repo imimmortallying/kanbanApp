@@ -17,7 +17,7 @@ interface IAddNewTodoRequest {
 }
 
 export const addNewTodoRequest = createAsyncThunk<
-  Number,
+  number,
   IAddNewTodoRequest,
   { rejectValue: string }
 >("addNewTodoRequest", async (authData, thunkAPI) => {
@@ -41,7 +41,7 @@ export const addNewTodoRequest = createAsyncThunk<
 
 
 export const updateTodoRequest = createAsyncThunk<
-  Number,
+  number,
   IUpdateTodoRequest,
   { rejectValue: string }
 >("updateTodoRequest", async (authData, thunkAPI) => {
@@ -69,7 +69,7 @@ interface IDeleteTodoRequest {
 }
 
 export const deleteTodoRequest = createAsyncThunk<
-  Number,
+  number,
   IDeleteTodoRequest,
   { rejectValue: string }
 >("deleteTodoRequest", async (authData, thunkAPI) => {
@@ -97,7 +97,7 @@ interface ISwapTodosRequest {
 }
 
 export const swapTodosRequest = createAsyncThunk<
-  Number,
+  number,
   ISwapTodosRequest,
   { rejectValue: string }
 >("swapTodosRequest", async (authData, thunkAPI) => {
@@ -122,7 +122,7 @@ interface LoginByUsernameProps {
 }
 
 export const InitReduxByToken = createAsyncThunk<
-  Number,
+  number,
   LoginByUsernameProps,
   { rejectValue: string }
 >("InitReduxByToken", async (authData, thunkAPI) => {

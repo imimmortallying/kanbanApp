@@ -8,7 +8,7 @@ interface IRegisterUser {
 }
 
 export const RegisterUser = createAsyncThunk<
-  Number,
+  number,
   IRegisterUser,
   { rejectValue: string }
 >("Registration/RegisterUser", async (authData, thunkAPI) => {

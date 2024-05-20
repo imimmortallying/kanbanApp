@@ -5,11 +5,7 @@ import Moon from "shared/assets/icons/moon.svg";
 import { useTheme } from "shared/lib/ThemeProvider/useTheme";
 import { Theme } from "shared/lib/ThemeProvider/ThemeContext";
 
-interface ThemeSwitcherProps {
-  className?: string;
-}
-
-export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
+export const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (

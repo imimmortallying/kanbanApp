@@ -4,12 +4,14 @@ import { useAppDispatch } from "shared/lib/store/redux";
 import { updateTodoRequest } from "entities/Todo/model/todoThunk";
 import { changeTodoText } from "entities/Todo/model/todosSlice";
 import { classNames } from "shared/lib/classNames/classNames";
+import { IUser } from "entities/User/model/slice/types";
+import { ITodo } from "entities/Todo/model/types";
 
 interface TodoTextareaEditModeProps {
-  authData: any;
-  id: string;
-  todo: any;
-  text: string;
+  authData: IUser["authData"];
+  id: ITodo["id"];
+  todo: ITodo;
+  text: ITodo["text"];
   className?: string;
   setInputEditMode: (arg: boolean) => void;
 }
@@ -25,7 +27,9 @@ export const TodoTextareaEditMode = ({
   const dispatch = useAppDispatch();
 
   const [textareaValue, setTextareaValue] = useState(text);
-  const handleInputChange = (e: any) => {
+  const handleInputChange: React.ComponentProps<"textarea">["onChange"] = (
+    e
+  ) => {
     setTextareaValue(e.target.value);
   };
 

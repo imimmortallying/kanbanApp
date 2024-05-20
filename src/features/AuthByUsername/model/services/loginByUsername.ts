@@ -12,7 +12,7 @@ interface ILoginByUsernameProps {
 }
 
 export const loginByUsername = createAsyncThunk<
-  Number,
+  number,
   ILoginByUsernameProps,
   { rejectValue: string }
 >("login/loginByUsername", async (authData, thunkAPI) => {

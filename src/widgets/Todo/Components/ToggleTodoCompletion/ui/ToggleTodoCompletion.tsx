@@ -3,25 +3,25 @@ import cls from "./ToggleTodoCompletion.module.scss";
 import { useAppDispatch } from "shared/lib/store/redux";
 import { updateTodoRequest } from "entities/Todo/model/todoThunk";
 import { toggle } from "entities/Todo/model/todosSlice";
+import { IUser } from "entities/User/model/slice/types";
+import { ITodo } from "entities/Todo/model/types";
 
 interface ToggleTodoCompletionProps {
   className?: string;
-  authData: any;
-  id: string;
-  todo: any;
-  completed: boolean;
+  authData: IUser["authData"];
+  id: ITodo["id"];
+  todo: ITodo;
+  completed: ITodo['completed'];
 }
 
 export const ToggleTodoCompletion = ({
-  className,
   authData,
   id,
   todo,
   completed,
 }: ToggleTodoCompletionProps) => {
+  const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch();
-    
   return (
     <Checkbox
       onChange={() => {
